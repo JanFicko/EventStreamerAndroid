@@ -1,15 +1,38 @@
 package xyz.eventstreamer.eventstreamer.data.user;
 
+import java.util.List;
+
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
+import xyz.eventstreamer.eventstreamer.model.BaseResponse;
 import xyz.eventstreamer.eventstreamer.model.User;
 
 public interface UserService {
 
-    @GET("/login/")
-    Flowable<User> login(@Body User user);
+    @GET("/login")
+    Flowable<BaseResponse> login(@Body User user);
 
-    @GET("/register/")
-    Flowable<User> register(@Body User user);
+    @POST("/")
+    Flowable<BaseResponse> registerUser(@Body User user);
+
+    @PUT("/")
+    Flowable<BaseResponse> updateUser(@Body User user);
+
+    @GET("/")
+    Flowable<List<User>> getUsers();
+
+    @GET("/:id")
+    Flowable<User> getUser(@Path("id") int id);
+
+    @DELETE("/")
+    Flowable<BaseResponse> deleteUser(@Body User user);
+
+    @POST("/kategorija")
+    Flowable<BaseResponse> categories(@Body User user);
+
 }
