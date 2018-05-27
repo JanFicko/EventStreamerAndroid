@@ -32,25 +32,48 @@ public class EventRepository implements EventDataSource {
     }
 
     @Override
-    public Flowable<List<Event>> getCards() {
-        // TODO
-        return null;
+    public Flowable<List<Event>> getEvents() {
+        return eventRemoteDataSource.getEvents();
     }
 
     @Override
-    public Flowable<Event> getEvent(@NonNull String eventId) {
-        // TODO
-        return null;
+    public Flowable<List<Event>> getEventByQuery(@NonNull String query) {
+        return eventRemoteDataSource.getEventByQuery(query);
     }
 
     @Override
-    public void addEvent(Event event) {
-        // TODO
+    public Flowable<Event> getEventById(@NonNull String eventId) {
+        return eventRemoteDataSource.getEventById(eventId);
     }
 
     @Override
-    public void removeCard(Event event) {
-        // TODO
+    public Flowable<Event> addEvent(Event event) {
+        return eventRemoteDataSource.addEvent(event);
+    }
+
+    @Override
+    public Flowable<Event> removeEvent(Event event) {
+        return eventRemoteDataSource.removeEvent(event);
+    }
+
+    @Override
+    public Flowable<Event> updateEvent(Event event) {
+        return eventRemoteDataSource.updateEvent(event);
+    }
+
+    @Override
+    public Flowable<Event> addHashtag(Event event) {
+        return eventRemoteDataSource.addHashtag(event);
+    }
+
+    @Override
+    public Flowable<Event> addLocation(Event event) {
+        return eventRemoteDataSource.addLocation(event);
+    }
+
+    @Override
+    public Flowable<Event> addCategory(Event event) {
+        return eventRemoteDataSource.addCategory(event);
     }
 
 }

@@ -1,24 +1,24 @@
-package xyz.eventstreamer.eventstreamer.ui.dashboard;
+package xyz.eventstreamer.eventstreamer.ui.findevent;
 
-import android.support.annotation.NonNull;
-
-import io.reactivex.Flowable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import xyz.eventstreamer.eventstreamer.data.event.EventRepository;
+import xyz.eventstreamer.eventstreamer.data.user.UserRepository;
+import xyz.eventstreamer.eventstreamer.model.User;
+import xyz.eventstreamer.eventstreamer.ui.login.LoginContract;
 import xyz.eventstreamer.eventstreamer.util.schedulers.BaseSchedulerProvider;
 
-public class DashboardPresenter implements DashboardContract.Presenter {
+public class FindEventPresenter implements FindEventContract.Presenter {
 
-    private DashboardContract.View view;
+    private FindEventContract.View view;
     private EventRepository repository;
 
     private final BaseSchedulerProvider schedulerProvider;
     private CompositeDisposable compositeDisposable;
 
-    public DashboardPresenter(DashboardContract.View view,
-                          EventRepository repository,
-                          BaseSchedulerProvider schedulerProvider) {
+    public FindEventPresenter(FindEventContract.View view,
+                              EventRepository repository,
+                              BaseSchedulerProvider schedulerProvider) {
         this.repository = repository;
         this.view = view;
         this.schedulerProvider = schedulerProvider;
@@ -28,9 +28,7 @@ public class DashboardPresenter implements DashboardContract.Presenter {
     }
 
     @Override
-    public void subscribe() {
-        getEvents();
-    }
+    public void subscribe() { }
 
     @Override
     public void unsubscribe() {
@@ -38,13 +36,13 @@ public class DashboardPresenter implements DashboardContract.Presenter {
     }
 
     @Override
-    public void getEvents() {
+    public void findEventsByQuery(String query) {
         view.setLoadingIndicator(true);
 
         compositeDisposable.clear();
 
         Disposable disposable = repository
-                .getEvents()
+                .getEventByQuery(query)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(

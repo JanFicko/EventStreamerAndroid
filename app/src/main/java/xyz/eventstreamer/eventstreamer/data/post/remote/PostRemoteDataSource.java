@@ -8,6 +8,7 @@ import io.reactivex.Flowable;
 import xyz.eventstreamer.eventstreamer.EventStreamer;
 import xyz.eventstreamer.eventstreamer.data.RetrofitFactory;
 import xyz.eventstreamer.eventstreamer.data.post.PostDataSource;
+import xyz.eventstreamer.eventstreamer.data.post.PostService;
 import xyz.eventstreamer.eventstreamer.model.Post;
 
 public class PostRemoteDataSource implements PostDataSource {
@@ -27,12 +28,13 @@ public class PostRemoteDataSource implements PostDataSource {
 
     @Override
     public Flowable<List<Post>> getPosts(String eventId) {
-        // TODO
-        return null;
+        PostService postService = retrofitFactory.postService();
+        return postService.getPosts(eventId);
     }
 
     @Override
-    public void addPost(Post post) {
-        // TODO
+    public Flowable<Post> addPost(Post post) {
+        PostService postService = retrofitFactory.postService();
+        return postService.addPost(post);
     }
 }

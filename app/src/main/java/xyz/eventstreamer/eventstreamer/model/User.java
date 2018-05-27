@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class User {
+public class User extends BaseResponse {
 
-    @SerializedName("id")
+    @SerializedName("_id")
     @Expose
-    private String id;
+    private String _id;
     @SerializedName("ime")
     @Expose
     private String ime;
@@ -34,12 +34,12 @@ public class User {
 
     public User(){}
 
-    public String getId() {
-        return id;
+    public String getIdUporabnik() {
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdUporabnik(String _id) {
+        this._id = _id;
     }
 
     public String getIme() {

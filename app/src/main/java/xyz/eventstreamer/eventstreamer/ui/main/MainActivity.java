@@ -14,6 +14,11 @@ import xyz.eventstreamer.eventstreamer.ui.addevent.AddEventFragment;
 import xyz.eventstreamer.eventstreamer.ui.dashboard.DashboardFragment;
 import xyz.eventstreamer.eventstreamer.ui.dashboard.DashboardPresenter;
 import xyz.eventstreamer.eventstreamer.ui.findevent.FindEventFragment;
+import xyz.eventstreamer.eventstreamer.ui.findevent.FindEventPresenter;
+import xyz.eventstreamer.eventstreamer.ui.login.LoginFragment;
+import xyz.eventstreamer.eventstreamer.ui.login.LoginPresenter;
+import xyz.eventstreamer.eventstreamer.ui.register.RegisterFragment;
+import xyz.eventstreamer.eventstreamer.ui.register.RegisterPresenter;
 
 public class MainActivity
         extends
@@ -21,10 +26,17 @@ public class MainActivity
         implements
             MainContract.View {
 
+    private LoginFragment loginFragment;
+    private RegisterFragment registerFragment;
     private DashboardFragment dashboardFragment;
     private FindEventFragment findEventFragment;
     private AboutEventFragment aboutEventFragment;
     private AddEventFragment addEventFragment;
+
+    private RegisterPresenter registerPresenter;
+    private LoginPresenter loginPresenter;
+    private DashboardPresenter dashboardPresenter;
+    private FindEventPresenter findEventPresenter;
 
     @Override
     protected int setLayoutResId() {
@@ -38,12 +50,45 @@ public class MainActivity
     }
 
     @Override
+    public void openRegister(int animationType) {
+        if(registerFragment == null){
+            registerFragment = RegisterFragment.newInstance();
+        }
+        if(registerPresenter == null){
+            registerPresenter = new RegisterPresenter(
+                    registerFragment,
+                    Injection.provideUserRepository(getApplicationContext()),
+                    Injection.provideSchedulerProvider()
+            );
+        }
+        moveToNextFragment(registerFragment, animationType);
+    }
+
+    @Override
+    public void openLogin(int animationType) {
+        if(loginFragment == null){
+            loginFragment = LoginFragment.newInstance();
+        }
+
+        if(loginPresenter == null){
+            loginPresenter = new LoginPresenter(
+                    loginFragment,
+                    Injection.provideUserRepository(getApplicationContext()),
+                    Injection.provideSchedulerProvider()
+            );
+        }
+        moveToNextFragment(loginFragment, animationType);
+    }
+
+    @Override
     public void openDashboard(@Animation.AnimationType int animationType) {
         if(dashboardFragment == null){
             dashboardFragment = DashboardFragment.newInstance();
-            new DashboardPresenter(
+        }
+        if(dashboardPresenter == null){
+            dashboardPresenter = new DashboardPresenter(
                     dashboardFragment,
-                    Injection.provideEvemtRepository(getApplicationContext()),
+                    Injection.provideEventRepository(getApplicationContext()),
                     Injection.provideSchedulerProvider()
             );
         }
@@ -54,6 +99,13 @@ public class MainActivity
     public void openFindEvent(@Animation.AnimationType int animationType) {
         if(findEventFragment == null){
             findEventFragment = FindEventFragment.newInstance();
+        }
+        if(findEventPresenter == null){
+            findEventPresenter = new FindEventPresenter(
+                    findEventFragment,
+                    Injection.provideEventRepository(getApplicationContext()),
+                    Injection.provideSchedulerProvider()
+            );
         }
         moveToNextFragment(findEventFragment, animationType);
     }

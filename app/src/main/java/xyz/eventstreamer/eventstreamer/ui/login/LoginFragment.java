@@ -1,45 +1,40 @@
-package xyz.eventstreamer.eventstreamer.ui.dashboard;
+package xyz.eventstreamer.eventstreamer.ui.login;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-
-import java.util.List;
+import android.widget.EditText;
 
 import butterknife.BindView;
 import xyz.eventstreamer.eventstreamer.R;
-import xyz.eventstreamer.eventstreamer.model.Event;
+import xyz.eventstreamer.eventstreamer.commons.Animation;
+import xyz.eventstreamer.eventstreamer.model.User;
 import xyz.eventstreamer.eventstreamer.ui.BaseFragment;
 import xyz.eventstreamer.eventstreamer.ui.main.MainActivity;
 
-public class DashboardFragment
-        extends
-            BaseFragment
-        implements
-            DashboardContract.View {
+public class LoginFragment extends BaseFragment implements LoginContract.View {
 
     private MainActivity activity;
-    private DashboardContract.Presenter presenter;
+    private LoginContract.Presenter presenter;
 
-    private EventAdapter eventAdapter;
+    @BindView(R.id.et_email)
+    EditText etEmail;
+    @BindView(R.id.et_password)
+    EditText etPassword;
 
-    @BindView(R.id.rv_events)
-    RecyclerView rvEvents;
-
-    public static DashboardFragment newInstance() {
+    public static LoginFragment newInstance() {
         Bundle args = new Bundle();
-        DashboardFragment fragment = new DashboardFragment();
+        LoginFragment fragment = new LoginFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected int setLayoutResId() {
-        return R.layout.fragment_dashboard;
+        return R.layout.fragment_login;
     }
 
     @Override
-    public void setPresenter(DashboardContract.Presenter presenter) {
+    public void setPresenter(LoginContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
@@ -62,17 +57,17 @@ public class DashboardFragment
     }
 
     @Override
-    public void showEventsView(List<Event> eventList) {
+    public void onSuccessfulLogin(User user) {
+        activity.openDashboard(Animation.RIGHT);
+    }
+
+    @Override
+    public void showErrorMessage() {
         // TODO
     }
 
     @Override
     public void setLoadingIndicator(boolean active) {
-        // TODO
-    }
-
-    @Override
-    public void showErrorMessage() {
         // TODO
     }
 

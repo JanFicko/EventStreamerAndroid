@@ -9,11 +9,21 @@ import xyz.eventstreamer.eventstreamer.model.Event;
 
 public interface EventDataSource {
 
-    Flowable<List<Event>> getCards();
+    Flowable<List<Event>> getEvents();
 
-    Flowable<Event> getEvent(@NonNull String eventId);
+    Flowable<Event> getEventById(@NonNull String eventId);
 
-    void addEvent(Event event);
+    Flowable<List<Event>> getEventByQuery(@NonNull String query);
 
-    void removeCard(Event event);
+    Flowable<Event> addEvent(Event event);
+
+    Flowable<Event> removeEvent(Event event);
+
+    Flowable<Event> updateEvent(Event event);
+
+    Flowable<Event> addHashtag(Event event);
+
+    Flowable<Event> addLocation(Event event);
+
+    Flowable<Event> addCategory(Event event);
 }

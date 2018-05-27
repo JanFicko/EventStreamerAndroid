@@ -1,45 +1,41 @@
-package xyz.eventstreamer.eventstreamer.ui.dashboard;
+package xyz.eventstreamer.eventstreamer.ui.register;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-
-import java.util.List;
+import android.widget.EditText;
 
 import butterknife.BindView;
 import xyz.eventstreamer.eventstreamer.R;
-import xyz.eventstreamer.eventstreamer.model.Event;
+import xyz.eventstreamer.eventstreamer.commons.Animation;
 import xyz.eventstreamer.eventstreamer.ui.BaseFragment;
 import xyz.eventstreamer.eventstreamer.ui.main.MainActivity;
 
-public class DashboardFragment
-        extends
-            BaseFragment
-        implements
-            DashboardContract.View {
+public class RegisterFragment extends BaseFragment implements RegisterContract.View {
 
     private MainActivity activity;
-    private DashboardContract.Presenter presenter;
+    private RegisterContract.Presenter presenter;
 
-    private EventAdapter eventAdapter;
+    @BindView(R.id.et_email)
+    EditText etEmail;
+    @BindView(R.id.et_password)
+    EditText etPassword;
+    @BindView(R.id.et_password_repeat)
+    EditText etPassworRepeat;
 
-    @BindView(R.id.rv_events)
-    RecyclerView rvEvents;
-
-    public static DashboardFragment newInstance() {
+    public static RegisterFragment newInstance() {
         Bundle args = new Bundle();
-        DashboardFragment fragment = new DashboardFragment();
+        RegisterFragment fragment = new RegisterFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected int setLayoutResId() {
-        return R.layout.fragment_dashboard;
+        return R.layout.fragment_register;
     }
 
     @Override
-    public void setPresenter(DashboardContract.Presenter presenter) {
+    public void setPresenter(RegisterContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
@@ -62,17 +58,17 @@ public class DashboardFragment
     }
 
     @Override
-    public void showEventsView(List<Event> eventList) {
+    public void onSuccessfulRegister() {
+        activity.openLogin(Animation.RIGHT);
+    }
+
+    @Override
+    public void showErrorMessage() {
         // TODO
     }
 
     @Override
     public void setLoadingIndicator(boolean active) {
-        // TODO
-    }
-
-    @Override
-    public void showErrorMessage() {
         // TODO
     }
 

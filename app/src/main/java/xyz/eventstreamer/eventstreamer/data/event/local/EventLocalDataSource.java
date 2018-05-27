@@ -35,24 +35,56 @@ public class EventLocalDataSource implements EventDataSource{
     }
 
     @Override
-    public Flowable<List<Event>> getCards() {
+    public Flowable<List<Event>> getEvents() {
         // TODO
         return null;
     }
 
     @Override
-    public Flowable<Event> getEvent(@NonNull String eventId) {
+    public Flowable<Event> getEventById(@NonNull String eventId) {
         // TODO
         return null;
     }
 
     @Override
-    public void addEvent(Event event) {
+    public Flowable<List<Event>> getEventByQuery(@NonNull String query) {
         // TODO
+        return null;
     }
 
     @Override
-    public void removeCard(Event event) {
+    public Flowable<Event> addEvent(Event event) {
         // TODO
+        return null;
+    }
+
+    @Override
+    public Flowable<Event> removeEvent(Event event) {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public Flowable<Event> updateEvent(Event event) {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public Flowable<Event> addHashtag(Event event) {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public Flowable<Event> addLocation(Event event) {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public Flowable<Event> addCategory(Event event) {
+        // TODO
+        return null;
     }
 }

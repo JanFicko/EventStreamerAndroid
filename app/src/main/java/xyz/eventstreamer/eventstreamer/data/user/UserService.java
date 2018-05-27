@@ -14,25 +14,25 @@ import xyz.eventstreamer.eventstreamer.model.User;
 
 public interface UserService {
 
-    @GET("/login")
-    Flowable<BaseResponse> login(@Body User user);
+    @GET("/api/user/login")
+    Flowable<User> login(@Body User user);
 
-    @POST("/")
-    Flowable<BaseResponse> registerUser(@Body User user);
+    @POST("/api/user/")
+    Flowable<User> registerUser(@Body User user);
 
-    @PUT("/")
-    Flowable<BaseResponse> updateUser(@Body User user);
+    @PUT("/api/user/")
+    Flowable<User> updateUser(@Body User user);
 
-    @GET("/")
+    @GET("/api/user/")
     Flowable<List<User>> getUsers();
 
-    @GET("/:id")
+    @GET("/api/user/:id")
     Flowable<User> getUser(@Path("id") int id);
 
-    @DELETE("/")
-    Flowable<BaseResponse> deleteUser(@Body User user);
+    @DELETE("/api/user/")
+    Flowable<User> deleteUser(@Body User user);
 
-    @POST("/kategorija")
-    Flowable<BaseResponse> categories(@Body User user);
+    @POST("/api/user/kategorija")
+    Flowable<User> categories(@Body User user);
 
 }

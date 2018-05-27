@@ -9,5 +9,5 @@ public interface PostDataSource {
 
     Flowable<List<Post>> getPosts(String eventId);
 
-    void addPost(Post post);
+    Flowable<Post> addPost(Post post);
 }

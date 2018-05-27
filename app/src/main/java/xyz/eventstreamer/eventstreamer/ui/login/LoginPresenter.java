@@ -1,24 +1,22 @@
-package xyz.eventstreamer.eventstreamer.ui.dashboard;
+package xyz.eventstreamer.eventstreamer.ui.login;
 
-import android.support.annotation.NonNull;
-
-import io.reactivex.Flowable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import xyz.eventstreamer.eventstreamer.data.event.EventRepository;
+import xyz.eventstreamer.eventstreamer.data.user.UserRepository;
+import xyz.eventstreamer.eventstreamer.model.User;
 import xyz.eventstreamer.eventstreamer.util.schedulers.BaseSchedulerProvider;
 
-public class DashboardPresenter implements DashboardContract.Presenter {
+public class LoginPresenter implements LoginContract.Presenter {
 
-    private DashboardContract.View view;
-    private EventRepository repository;
+    private LoginContract.View view;
+    private UserRepository repository;
 
     private final BaseSchedulerProvider schedulerProvider;
     private CompositeDisposable compositeDisposable;
 
-    public DashboardPresenter(DashboardContract.View view,
-                          EventRepository repository,
-                          BaseSchedulerProvider schedulerProvider) {
+    public LoginPresenter(LoginContract.View view,
+                             UserRepository repository,
+                             BaseSchedulerProvider schedulerProvider) {
         this.repository = repository;
         this.view = view;
         this.schedulerProvider = schedulerProvider;
@@ -28,9 +26,7 @@ public class DashboardPresenter implements DashboardContract.Presenter {
     }
 
     @Override
-    public void subscribe() {
-        getEvents();
-    }
+    public void subscribe() { }
 
     @Override
     public void unsubscribe() {
@@ -38,19 +34,19 @@ public class DashboardPresenter implements DashboardContract.Presenter {
     }
 
     @Override
-    public void getEvents() {
+    public void loginUser(User user) {
         view.setLoadingIndicator(true);
 
         compositeDisposable.clear();
 
         Disposable disposable = repository
-                .getEvents()
+                .login(user)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(
-                        events -> {
+                        loggedInUser -> {
                             view.setLoadingIndicator(false);
-                            view.showEventsView(events);
+                            view.onSuccessfulLogin(loggedInUser);
                         },
                         throwable -> {
                             view.setLoadingIndicator(false);

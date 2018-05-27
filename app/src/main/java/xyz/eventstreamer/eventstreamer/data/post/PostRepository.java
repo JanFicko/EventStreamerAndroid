@@ -31,12 +31,11 @@ public class PostRepository implements PostDataSource {
 
     @Override
     public Flowable<List<Post>> getPosts(String eventId) {
-        // TODO
-        return null;
+        return postRemoteDataSource.getPosts(eventId);
     }
 
     @Override
-    public void addPost(Post post) {
-        // TODO
+    public Flowable<Post> addPost(Post post) {
+        return postRemoteDataSource.addPost(post);
     }
 }

@@ -38,7 +38,8 @@ public class PostLocalDataSource implements PostDataSource {
     }
 
     @Override
-    public void addPost(Post post) {
+    public Flowable<Post> addPost(Post post) {
         // TODO
+        return null;
     }
 }

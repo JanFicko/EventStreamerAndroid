@@ -1,20 +1,21 @@
-package xyz.eventstreamer.eventstreamer.ui.dashboard;
+package xyz.eventstreamer.eventstreamer.ui.addevent;
 
 import java.util.List;
 
 import xyz.eventstreamer.eventstreamer.model.Event;
 import xyz.eventstreamer.eventstreamer.ui.BasePresenter;
 import xyz.eventstreamer.eventstreamer.ui.BaseView;
+import xyz.eventstreamer.eventstreamer.ui.login.LoginContract;
 
-public interface DashboardContract {
+public interface AddEventContract {
 
     interface View extends BaseView<Presenter> {
-        void showEventsView(List<Event> eventList);
+        void onSuccessfulEventAdded();
         void showErrorMessage();
     }
 
     interface Presenter extends BasePresenter {
-        void getEvents();
+        void addEvent(Event event);
     }
 
 }
