@@ -9,14 +9,18 @@ import xyz.eventstreamer.eventstreamer.R;
 import xyz.eventstreamer.eventstreamer.commons.Animation;
 import xyz.eventstreamer.eventstreamer.data.Injection;
 import xyz.eventstreamer.eventstreamer.ui.BaseActivity;
+import xyz.eventstreamer.eventstreamer.ui.aboutevent.AboutEventContract;
 import xyz.eventstreamer.eventstreamer.ui.aboutevent.AboutEventFragment;
+import xyz.eventstreamer.eventstreamer.ui.aboutevent.AboutEventPresenter;
 import xyz.eventstreamer.eventstreamer.ui.addevent.AddEventFragment;
+import xyz.eventstreamer.eventstreamer.ui.addevent.AddEventPresenter;
 import xyz.eventstreamer.eventstreamer.ui.dashboard.DashboardFragment;
 import xyz.eventstreamer.eventstreamer.ui.dashboard.DashboardPresenter;
 import xyz.eventstreamer.eventstreamer.ui.findevent.FindEventFragment;
 import xyz.eventstreamer.eventstreamer.ui.findevent.FindEventPresenter;
 import xyz.eventstreamer.eventstreamer.ui.login.LoginFragment;
 import xyz.eventstreamer.eventstreamer.ui.login.LoginPresenter;
+import xyz.eventstreamer.eventstreamer.ui.profile.ProfileFragment;
 import xyz.eventstreamer.eventstreamer.ui.register.RegisterFragment;
 import xyz.eventstreamer.eventstreamer.ui.register.RegisterPresenter;
 
@@ -32,11 +36,14 @@ public class MainActivity
     private FindEventFragment findEventFragment;
     private AboutEventFragment aboutEventFragment;
     private AddEventFragment addEventFragment;
+    private ProfileFragment profileFragment;
 
     private RegisterPresenter registerPresenter;
     private LoginPresenter loginPresenter;
     private DashboardPresenter dashboardPresenter;
     private FindEventPresenter findEventPresenter;
+    private AboutEventPresenter aboutEventPresenter;
+    private AddEventPresenter addEventPresenter;
 
     @Override
     protected int setLayoutResId() {
@@ -66,10 +73,7 @@ public class MainActivity
 
     @Override
     public void openLogin(int animationType) {
-        if(loginFragment == null){
-            loginFragment = LoginFragment.newInstance();
-        }
-
+        loginFragment = LoginFragment.newInstance();
         if(loginPresenter == null){
             loginPresenter = new LoginPresenter(
                     loginFragment,
@@ -78,6 +82,12 @@ public class MainActivity
             );
         }
         moveToNextFragment(loginFragment, animationType);
+    }
+
+    @Override
+    public void openProfile(int animationType) {
+        profileFragment = ProfileFragment.newInstance();
+        moveToNextFragment(profileFragment, animationType);
     }
 
     @Override
@@ -115,6 +125,13 @@ public class MainActivity
         if(aboutEventFragment == null){
             aboutEventFragment = AboutEventFragment.newInstance();
         }
+        if(aboutEventPresenter == null){
+            aboutEventPresenter = new AboutEventPresenter(
+                    aboutEventFragment,
+                    Injection.providePostRepository(getApplicationContext()),
+                    Injection.provideSchedulerProvider()
+            );
+        }
         moveToNextFragment(aboutEventFragment, animationType);
     }
 
@@ -122,6 +139,13 @@ public class MainActivity
     public void openAddEvent(@Animation.AnimationType int animationType) {
         if(addEventFragment == null){
             addEventFragment = AddEventFragment.newInstance();
+        }
+        if(addEventPresenter == null){
+            addEventPresenter = new AddEventPresenter(
+                    addEventFragment,
+                    Injection.provideEventRepository(getApplicationContext()),
+                    Injection.provideSchedulerProvider()
+            );
         }
         moveToNextFragment(addEventFragment, animationType);
     }

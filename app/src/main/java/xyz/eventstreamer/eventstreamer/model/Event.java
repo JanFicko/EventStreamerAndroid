@@ -18,7 +18,7 @@ public class Event extends BaseResponse {
     private String opis;
     @SerializedName("datum")
     @Expose
-    private long datum;
+    private String datum;
     @SerializedName("objava")
     @Expose
     private List<Post> objava;
@@ -61,11 +61,11 @@ public class Event extends BaseResponse {
         this.opis = opis;
     }
 
-    public long getDatum() {
+    public String getDatum() {
         return datum;
     }
 
-    public void setDatum(long datum) {
+    public void setDatum(String datum) {
         this.datum = datum;
     }
 
@@ -101,7 +101,7 @@ public class Event extends BaseResponse {
         this.hashtag = hashtag;
     }
 
-    public String getIdUuporabnik() {
+    public String getIdUporabnik() {
         return id_uporabnik;
     }
 

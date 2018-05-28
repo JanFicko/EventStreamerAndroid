@@ -14,7 +14,7 @@ import xyz.eventstreamer.eventstreamer.model.User;
 
 public interface UserService {
 
-    @GET("/api/user/login")
+    @POST("/api/user/login")
     Flowable<User> login(@Body User user);
 
     @POST("/api/user/")

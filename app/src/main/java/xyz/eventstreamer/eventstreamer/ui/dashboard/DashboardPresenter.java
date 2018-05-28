@@ -2,6 +2,8 @@ package xyz.eventstreamer.eventstreamer.ui.dashboard;
 
 import android.support.annotation.NonNull;
 
+import java.net.ConnectException;
+
 import io.reactivex.Flowable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -53,6 +55,9 @@ public class DashboardPresenter implements DashboardContract.Presenter {
                             view.showEventsView(events);
                         },
                         throwable -> {
+                            if(throwable instanceof ConnectException){
+                                view.showNoInternet();
+                            }
                             view.setLoadingIndicator(false);
                             view.showErrorMessage();
                         });

@@ -1,9 +1,14 @@
 package xyz.eventstreamer.eventstreamer.ui.login;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -23,6 +28,8 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     private LoginContract.Presenter presenter;
     private SharedPreferenceUtil sharedPreferenceUtil = EventStreamer.getInstance().getSharedPreferenceUtil();
 
+    @BindView(R.id.tv_toolbar_title)
+    TextView tvToolbarTitle;
     @BindView(R.id.til_email)
     TextInputLayout tilEmail;
     @BindView(R.id.et_email)
@@ -31,6 +38,8 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     TextInputLayout tilPassword;
     @BindView(R.id.et_password)
     EditText etPassword;
+    @BindView(R.id.tv_register)
+    TextView tvRegister;
 
     public static LoginFragment newInstance() {
         Bundle args = new Bundle();
@@ -59,6 +68,11 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     public void onResume() {
         super.onResume();
         presenter.subscribe();
+        tvToolbarTitle.setText(R.string.login);
+        String registerText = getString(R.string.login_register_text);
+        SpannableString spanString = new SpannableString(registerText);
+        spanString.setSpan(new UnderlineSpan(), 0, spanString.length(), 0);
+        tvRegister.setText(spanString);
     }
 
     @Override
@@ -71,30 +85,6 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     public void onSuccessfulLogin(User user) {
         sharedPreferenceUtil.saveObject(Keys.KEY_USER, user);
         activity.openDashboard(Animation.RIGHT);
-    }
-
-    @OnClick(R.id.bt_login)
-    public void onClickLogin(){
-        boolean checker = true;
-        if(!etEmail.getText().toString().isEmpty()){
-            tilEmail.setError(getString(R.string.empty_field));
-            checker = false;
-        }
-        if(!etPassword.getText().toString().isEmpty()){
-            tilPassword.setError(getString(R.string.empty_field));
-            checker = false;
-        }
-        if(checker){
-            User user = new User();
-            user.setEmail(etEmail.getText().toString());
-            user.setGeslo(etPassword.getText().toString());
-            presenter.loginUser(user);
-        }
-    }
-
-    @OnClick(R.id.tv_register)
-    public void onClickRegister(){
-        activity.openRegister(Animation.LEFT);
     }
 
     @Override
@@ -111,4 +101,34 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     public void showNoInternet() {
         ToastUtil.toastLong(context, R.string.error_no_internet);
     }
+
+    @OnClick(R.id.bt_login)
+    public void onClickLogin(){
+        boolean checker = true;
+        if(etEmail.getText().toString().isEmpty()){
+            tilEmail.setError(getString(R.string.empty_field));
+            checker = false;
+        }
+        if(etPassword.getText().toString().isEmpty()){
+            tilPassword.setError(getString(R.string.empty_field));
+            checker = false;
+        }
+        if(checker){
+            User user = new User();
+            user.setEmail(etEmail.getText().toString());
+            user.setGeslo(etPassword.getText().toString());
+            presenter.loginUser(user);
+        }
+    }
+
+    @OnClick(R.id.tv_register)
+    public void onClickRegister(){
+        activity.openRegister(Animation.LEFT);
+    }
+
+    @OnClick(R.id.iv_back)
+    public void onClickBack(){
+        activity.openDashboard(Animation.RIGHT);
+    }
+
 }

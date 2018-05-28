@@ -21,7 +21,7 @@ public class Post extends BaseResponse {
     private String slika;
     @SerializedName("datum")
     @Expose
-    private long datum;
+    private String datum;
     @SerializedName("like")
     @Expose
     private List<Like> like;
@@ -60,11 +60,11 @@ public class Post extends BaseResponse {
         this.slika = slika;
     }
 
-    public long getDatum() {
+    public String getDatum() {
         return datum;
     }
 
-    public void setDatum(long datum) {
+    public void setDatum(String datum) {
         this.datum = datum;
     }
 
