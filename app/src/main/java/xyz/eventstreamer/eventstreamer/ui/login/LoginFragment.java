@@ -92,6 +92,11 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         }
     }
 
+    @OnClick(R.id.tv_register)
+    public void onClickRegister(){
+        activity.openRegister(Animation.LEFT);
+    }
+
     @Override
     public void showErrorMessage() {
         ToastUtil.toastLong(context, R.string.error_login_unsuccessful);
