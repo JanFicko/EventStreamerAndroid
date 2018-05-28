@@ -1,6 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryDark">@color/black</color>
+    <color name="colorPrimary">@color/blue</color>
+    <color name="colorAccent">@color/blue</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="semiWhite">#fffcfcfc</color>
+
+    <!--0% = #00-->
+    <!--10% = #16-->
+    <!--20% = #32-->
+    <!--30% = #48-->
+    <!--40% = #64-->
+    <!--50% = #80-->
+    <!--60% = #96-->
+    <!--70% = #112-->
+    <!--80% = #128-->
+    <!--90% = #144-->
+
+    <color name="grey_background">#f3f6f8</color>
+    <color name="grey_pressed">#ebedf0</color>
+    <color name="grey_inactive">#e1e2e6</color>
+    <color name="grey_light">#aeb0ba</color>
+    <color name="grey_divider">#8f92a5</color>
+    <color name="grey_divider_opacity50">#808f92a5</color>
+    <color name="grey_subtitle">#818496</color>
+    <color name="grey_main_title">#595c71</color>
+    <color name="grey_filter_gray_background">#f2f6f9</color>
+
+    <color name="blue_pressed_gradient_bg">#cce5ef</color>
+    <color name="blue_light">#81cff5</color>
+    <color name="blue">#009edb</color>
+    <color name="blue_pressed">#007eaf</color>
+
+    <color name="green_light">#aece51</color>
+    <color name="green_status">#7ed321</color>
+    <color name="green_dark">#61b152</color>
+
+    <color name="pink_error">#ff2163</color>
+    <color name="red">#d32124</color>
+
+    <color name="black100">#ff000000</color>
+    <color name="grey100">#ff595c71</color>
+    <color name="grey200">#fff3f6f8</color>
+    <color name="grey400">#ff818496</color>
+
+
+    <color name="toast_background">#bf111111</color>
+
+    <!-- Transparent colors -->
+
+    <color name="blue_pressed_solid_bg">#26007eaf</color>
+    <color name="white_pressed_gradient_bg">#33ffffff</color>
+    <color name="dialog_transparent_background">#b1000000</color>
+
+
 </resources>

@@ -1,11 +1,138 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Button" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+
+    <style name="Button.Blue">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Button.Blue.Solid">
+        <item name="android:background">@drawable/bg_button_blue</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="Text.Grey">
+        <item name="android:textColor">@color/grey_main_title</item>
+    </style>
+
+    <style name="Text.LightGrey">
+        <item name="android:textColor">@color/grey_subtitle</item>
+    </style>
+
+    <style name="Text.SuperLightGrey">
+        <item name="android:textColor">@color/grey_light</item>
+    </style>
+
+    <style name="Text.Blue">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="Text.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Text.Grey.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="Text.Grey.Medium">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="Text.Grey.Medium.Uppercase">
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="Text.Grey.Small18">
+        <item name="android:textSize">@dimen/text_size_18</item>
+    </style>
+
+    <style name="Text.Grey.Large">
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="Text.Grey.XLarge">
+        <item name="android:textSize">@dimen/text_size_xlarge</item>
+    </style>
+
+    <style name="Text.Grey.Cell">
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="Text.Grey.Cell.Trr">
+        <item name="android:layout_margin">@dimen/spacing_large</item>
+    </style>
+
+    <style name="Text.LightGrey.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="Text.LightGrey.Medium">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="Text.LightGrey.Large">
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="Text.LightGrey.XLarge">
+        <item name="android:textSize">@dimen/text_size_xlarge</item>
+    </style>
+
+    <style name="Text.Blue.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="Text.Blue.Medium">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="Text.Blue.Large">
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="Text.Blue.XLarge">
+        <item name="android:textSize">@dimen/text_size_xlarge</item>
+    </style>
+
+    <style name="Text.Blue.AllCaps">
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="Text.White.TextAllCaps">
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="Text.White.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="Text.White.Medium">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="Text.White.Large">
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="Text.White.XLarge">
+        <item name="android:textSize">@dimen/text_size_xlarge</item>
     </style>
 
 </resources>

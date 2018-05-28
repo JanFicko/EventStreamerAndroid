@@ -2,22 +2,33 @@ package xyz.eventstreamer.eventstreamer.ui.login;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.widget.EditText;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import xyz.eventstreamer.eventstreamer.EventStreamer;
 import xyz.eventstreamer.eventstreamer.R;
 import xyz.eventstreamer.eventstreamer.commons.Animation;
+import xyz.eventstreamer.eventstreamer.commons.Keys;
 import xyz.eventstreamer.eventstreamer.model.User;
 import xyz.eventstreamer.eventstreamer.ui.BaseFragment;
 import xyz.eventstreamer.eventstreamer.ui.main.MainActivity;
+import xyz.eventstreamer.eventstreamer.util.SharedPreferenceUtil;
+import xyz.eventstreamer.eventstreamer.util.ToastUtil;
 
 public class LoginFragment extends BaseFragment implements LoginContract.View {
 
     private MainActivity activity;
     private LoginContract.Presenter presenter;
+    private SharedPreferenceUtil sharedPreferenceUtil = EventStreamer.getInstance().getSharedPreferenceUtil();
 
+    @BindView(R.id.til_email)
+    TextInputLayout tilEmail;
     @BindView(R.id.et_email)
     EditText etEmail;
+    @BindView(R.id.til_password)
+    TextInputLayout tilPassword;
     @BindView(R.id.et_password)
     EditText etPassword;
 
@@ -58,12 +69,32 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
 
     @Override
     public void onSuccessfulLogin(User user) {
+        sharedPreferenceUtil.saveObject(Keys.KEY_USER, user);
         activity.openDashboard(Animation.RIGHT);
+    }
+
+    @OnClick(R.id.bt_login)
+    public void onClickLogin(){
+        boolean checker = true;
+        if(!etEmail.getText().toString().isEmpty()){
+            tilEmail.setError(getString(R.string.empty_field));
+            checker = false;
+        }
+        if(!etPassword.getText().toString().isEmpty()){
+            tilPassword.setError(getString(R.string.empty_field));
+            checker = false;
+        }
+        if(checker){
+            User user = new User();
+            user.setEmail(etEmail.getText().toString());
+            user.setGeslo(etPassword.getText().toString());
+            presenter.loginUser(user);
+        }
     }
 
     @Override
     public void showErrorMessage() {
-        // TODO
+        ToastUtil.toastLong(context, R.string.error_login_unsuccessful);
     }
 
     @Override
@@ -73,6 +104,6 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
 
     @Override
     public void showNoInternet() {
-        // TODO
+        ToastUtil.toastLong(context, R.string.error_no_internet);
     }
 }
