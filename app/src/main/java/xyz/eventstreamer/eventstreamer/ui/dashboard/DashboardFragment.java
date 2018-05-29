@@ -144,12 +144,12 @@ MarkerClickListener {
 
     @Override
     public void onEventClicked(Event event) {
-        // TODO
+        activity.openAboutEvent(Animation.LEFT, event.getIdDogodek());
     }
 
     @Override
     public void onMarkerClick(Event event) {
-        Log.d(TAG, "hojla: " + event.getNaziv());
+        activity.openAboutEvent(Animation.LEFT, event.getIdDogodek());
     }
 
     @Override

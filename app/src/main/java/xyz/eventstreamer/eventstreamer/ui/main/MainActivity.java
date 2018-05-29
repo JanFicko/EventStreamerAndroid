@@ -161,9 +161,9 @@ public class MainActivity
     }
 
     @Override
-    public void openAboutEvent(@Animation.AnimationType int animationType) {
+    public void openAboutEvent(@Animation.AnimationType int animationType, String eventId) {
         if(aboutEventFragment == null){
-            aboutEventFragment = AboutEventFragment.newInstance();
+            aboutEventFragment = AboutEventFragment.newInstance(eventId);
         }
         if(aboutEventPresenter == null){
             aboutEventPresenter = new AboutEventPresenter(

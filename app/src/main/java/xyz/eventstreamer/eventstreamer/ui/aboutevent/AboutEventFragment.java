@@ -15,7 +15,7 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
     private MainActivity activity;
     private AboutEventContract.Presenter presenter;
 
-    public static AboutEventFragment newInstance() {
+    public static AboutEventFragment newInstance(String eventId) {
         Bundle args = new Bundle();
         AboutEventFragment fragment = new AboutEventFragment();
         fragment.setArguments(args);
