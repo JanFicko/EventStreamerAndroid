@@ -77,13 +77,13 @@ public class ProfileFragment extends BaseFragment  {
     }
 
     @OnClick(R.id.bt_logout)
-    public void onBackLogout(){
+    public void onLogoutClick(){
         sharedPreferenceUtil.saveObject(Keys.KEY_USER, null);
         activity.openDashboard(Animation.RIGHT);
     }
 
     @OnClick(R.id.iv_back)
     public void onBackClick(){
-        activity.openDashboard(Animation.LEFT);
+        activity.openDashboard(Animation.RIGHT);
     }
 }

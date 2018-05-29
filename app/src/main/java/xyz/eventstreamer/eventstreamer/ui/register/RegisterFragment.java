@@ -118,20 +118,16 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
         if(etName.getText().toString().isEmpty()){
             tilName.setError(getString(R.string.empty_field));
             checker = false;
-        }
-        if(etSurname.getText().toString().isEmpty()){
+        } else if(etSurname.getText().toString().isEmpty()){
             tilSurname.setError(getString(R.string.empty_field));
             checker = false;
-        }
-        if(etEmail.getText().toString().isEmpty()){
+        } else if(etEmail.getText().toString().isEmpty()){
             tilEmail.setError(getString(R.string.empty_field));
             checker = false;
-        }
-        if(etPassword.getText().toString().isEmpty()){
+        } else if(etPassword.getText().toString().isEmpty()){
             tilPassword.setError(getString(R.string.empty_field));
             checker = false;
-        }
-        if(cbJournalist.isChecked() && etMedium.getText().toString().isEmpty()){
+        } else if(cbJournalist.isChecked() && etMedium.getText().toString().isEmpty()){
             tilMedium.setError(getString(R.string.empty_field));
             checker = false;
         }

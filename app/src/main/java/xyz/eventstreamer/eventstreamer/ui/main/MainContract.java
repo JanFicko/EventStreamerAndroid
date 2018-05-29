@@ -13,6 +13,7 @@ public interface MainContract {
         void openFindEvent(@Animation.AnimationType int animationType);
         void openAboutEvent(@Animation.AnimationType int animationType);
         void openAddEvent(@Animation.AnimationType int animationType);
+        void openMap(@Animation.AnimationType int animationType);
 
     }
 }

@@ -108,8 +108,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         if(etEmail.getText().toString().isEmpty()){
             tilEmail.setError(getString(R.string.empty_field));
             checker = false;
-        }
-        if(etPassword.getText().toString().isEmpty()){
+        } else if(etPassword.getText().toString().isEmpty()){
             tilPassword.setError(getString(R.string.empty_field));
             checker = false;
         }

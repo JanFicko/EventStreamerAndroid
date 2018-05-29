@@ -1,9 +1,20 @@
 package xyz.eventstreamer.eventstreamer.ui.main;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
+
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 
 import xyz.eventstreamer.eventstreamer.R;
 import xyz.eventstreamer.eventstreamer.commons.Animation;
@@ -45,6 +56,8 @@ public class MainActivity
     private AboutEventPresenter aboutEventPresenter;
     private AddEventPresenter addEventPresenter;
 
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
     @Override
     protected int setLayoutResId() {
         return R.layout.activity_main;
@@ -53,7 +66,13 @@ public class MainActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkLocationPermission();
         openDashboard(Animation.NONE);
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
     @Override
@@ -72,13 +91,10 @@ public class MainActivity
     }
 
     @Override
-    public void onBackPressed() {
-
-    }
-
-    @Override
     public void openLogin(int animationType) {
-        loginFragment = LoginFragment.newInstance();
+        if(loginFragment == null){
+            loginFragment = LoginFragment.newInstance();
+        }
         if(loginPresenter == null){
             loginPresenter = new LoginPresenter(
                     loginFragment,
@@ -99,6 +115,25 @@ public class MainActivity
     public void openDashboard(@Animation.AnimationType int animationType) {
         if(dashboardFragment == null){
             dashboardFragment = DashboardFragment.newInstance();
+        } else {
+            dashboardFragment.showListView();
+        }
+        if(dashboardPresenter == null){
+            dashboardPresenter = new DashboardPresenter(
+                    dashboardFragment,
+                    Injection.provideEventRepository(getApplicationContext()),
+                    Injection.provideSchedulerProvider()
+            );
+        }
+        moveToNextFragment(dashboardFragment, animationType);
+    }
+
+    @Override
+    public void openMap(@Animation.AnimationType int animationType) {
+        if(dashboardFragment == null){
+            dashboardFragment = DashboardFragment.newInstance();
+        } else {
+            dashboardFragment.showMapView();
         }
         if(dashboardPresenter == null){
             dashboardPresenter = new DashboardPresenter(
@@ -153,5 +188,70 @@ public class MainActivity
             );
         }
         moveToNextFragment(addEventFragment, animationType);
+    }
+
+
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.dashboard_location_persmission_title)
+                        .setMessage(R.string.dashboard_location_persmission_text)
+                        .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+                            //Prompt the user once explanation has been shown
+                            ActivityCompat.requestPermissions(this,
+                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                    MY_PERMISSIONS_REQUEST_LOCATION);
+                        })
+                        .create()
+                        .show();
+
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // location-related task you need to do.
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                    }
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+
+                }
+                return;
+            }
+
+        }
     }
 }

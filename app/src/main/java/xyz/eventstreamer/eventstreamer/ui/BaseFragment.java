@@ -31,10 +31,15 @@ public abstract class BaseFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(setLayoutResId(), container, false);
         ButterKnife.bind(this, view);
+        setupAfterBind();
         return view;
     }
 
     @LayoutRes
     protected abstract int setLayoutResId();
+
+    protected void setupAfterBind(){
+
+    }
 
 }

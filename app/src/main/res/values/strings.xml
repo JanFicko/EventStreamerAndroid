@@ -17,6 +17,10 @@
     <string name="title">Naslov</string>
     <string name="description">Opis</string>
     <string name="date">Datum</string>
+    <string name="categories">Kategorije</string>
+    <string name="location">Lokacija</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Prekliči</string>
 
     <!-- LOGIN -->
     <string name="login_title">Prijava v aplikacijo</string>
@@ -31,14 +35,28 @@
     <!-- DASHBOARD -->
     <string name="dashboard_event_fill_category" translatable="false">%1$s • %2$s</string>
     <string name="dashboard_event_fill" translatable="false">%1$s</string>
+    <string name="dashboard_location_persmission_title">Dovoljenje za uporabo lokacije</string>
+    <string name="dashboard_location_persmission_text">Za prikaz seznama dogodkov na zemljevidu potrebujemo vaše dovoljenje za uporabo lokacije</string>
 
     <!-- ADD EVENT -->
     <string name="add_event_title">Objavite nov dogodek</string>
     <string name="add_event_subtitle">Ustvarili boste nov dogodek na katerem boste lahko v realnem času objavljali posodobitve dogajanja</string>
+    <string name="add_event_pick_categories">Izberite kategorije</string>
+    <string-array name="categories">
+        <item>Novice</item>
+        <item>Šport</item>
+        <item>Kultura</item>
+        <item>Zabava</item>
+        <item>Politika</item>
+    </string-array>
+
 
     <!-- OTHERS -->
     <string name="error_no_internet">Ni internetne povezave</string>
     <string name="error_login_unsuccessful">Prijava neuspešna</string>
     <string name="error_register_unsuccessful">Registracija neuspešna</string>
+    <string name="error_add_event_unsuccessful">Dodajanje dogodka neuspešno</string>
+    <string name="error_no_category_picked">Izbrana ni nobena kategorija</string>
+    <string name="error_no_location_picked">Izbrana ni nobena lokacija</string>
 
 </resources>

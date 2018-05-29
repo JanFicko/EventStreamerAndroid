@@ -90,14 +90,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventAdapter
                         context.getString(
                                 R.string.dashboard_event_fill_category,
                                 event.getKategorija().get(0).getNaziv(),
-                                TimeUtil.generateBackendDateDateFromMillis(Long.valueOf(event.getDatum()))
+                                TimeUtil.generateCurrentTimeAndDateFromMillis(Long.valueOf(event.getDatum()))
                         )
                 );
             } else {
                 tvEventInfo.setText(
                         context.getString(
                                 R.string.dashboard_event_fill,
-                                TimeUtil.generateBackendDateDateFromMillis(Long.valueOf(event.getDatum()))
+                                TimeUtil.generateCurrentTimeAndDateFromMillis(Long.valueOf(event.getDatum()))
                         )
                 );
             }

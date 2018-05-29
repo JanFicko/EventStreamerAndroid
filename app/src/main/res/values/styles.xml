@@ -21,6 +21,11 @@
         <item name="android:background">@drawable/bg_button_blue</item>
     </style>
 
+    <style name="Button.TransparentBlueBorder">
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:background">@drawable/bg_button_blue_transparent_round</item>
+    </style>
+
     <style name="Text">
         <item name="android:background">@android:color/transparent</item>
     </style>
