@@ -46,7 +46,11 @@ public class LoginPresenter implements LoginContract.Presenter {
                 .subscribe(
                         loggedInUser -> {
                             view.setLoadingIndicator(false);
-                            view.onSuccessfulLogin(loggedInUser);
+                            if(loggedInUser.isSuccess()){
+                                view.onSuccessfulLogin(loggedInUser);
+                            } else {
+                                view.showErrorMessage();
+                            }
                         },
                         throwable -> {
                             view.setLoadingIndicator(false);

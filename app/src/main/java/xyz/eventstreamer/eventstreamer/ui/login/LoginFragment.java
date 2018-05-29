@@ -79,6 +79,31 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestProfile()
+                .requestId()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
+        if(account != null){
+            Log.d(TAG,"GOOGLE -> " + account.getEmail());
+        } else {
+            Log.d(TAG,"GOOGLE -> ni vpisan");
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         presenter.subscribe();
@@ -101,48 +126,8 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         activity.openDashboard(Animation.RIGHT);
     }
 
-    @Override
-    public void showErrorMessage() {
-        ToastUtil.toastLong(context, R.string.error_login_unsuccessful);
-    }
-
-    @Override
-    public void setLoadingIndicator(boolean active) {
-        // TODO
-    }
-
-    @Override
-    public void showNoInternet() {
-        ToastUtil.toastLong(context, R.string.error_no_internet);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
-        if(account != null){
-            Log.d("GOOGLE -> ", account.getDisplayName());
-        }
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
-    }
-
     @OnClick(R.id.sign_in_button)
     public void onClickSignInGoogle(){
-        signIn();
-    }
-
-    private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
     }
@@ -163,11 +148,15 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            Log.d("GOOGLE -> ", account.getDisplayName());
-            // Signed in successfully, show authenticated UI.
+
+            User user = new User();
+            user.setEmail(account.getEmail());
+            user.setGeslo(account.getId());
+            user.setIme(account.getGivenName());
+            user.setPriimek(account.getFamilyName());
+            user.setTip("Uporabnik");
+            presenter.loginUser(user);
         } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
         }
     }
@@ -201,4 +190,23 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         activity.openDashboard(Animation.RIGHT);
     }
 
+
+    @Override
+    public void showErrorMessage() {
+        try {
+            mGoogleSignInClient.signOut();
+        } catch (Exception ignore){ }
+
+        ToastUtil.toastLong(context, R.string.error_login_unsuccessful);
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+        // TODO
+    }
+
+    @Override
+    public void showNoInternet() {
+        ToastUtil.toastLong(context, R.string.error_no_internet);
+    }
 }

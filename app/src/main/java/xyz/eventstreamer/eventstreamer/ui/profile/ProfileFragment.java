@@ -3,9 +3,19 @@ package xyz.eventstreamer.eventstreamer.ui.profile;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.widget.TextView;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
+import java.util.concurrent.Executor;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -22,6 +32,7 @@ public class ProfileFragment extends BaseFragment  {
 
     private MainActivity activity;
     private SharedPreferenceUtil sharedPreferenceUtil = EventStreamer.getInstance().getSharedPreferenceUtil();
+    private GoogleSignInClient mGoogleSignInClient;
 
     @BindView(R.id.tv_toolbar_title)
     TextView tvToolbarTitle;
@@ -55,6 +66,18 @@ public class ProfileFragment extends BaseFragment  {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestProfile()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -79,6 +102,11 @@ public class ProfileFragment extends BaseFragment  {
     @OnClick(R.id.bt_logout)
     public void onBackLogout(){
         sharedPreferenceUtil.saveObject(Keys.KEY_USER, null);
+
+        try {
+            mGoogleSignInClient.signOut();
+        } catch (Exception ignore){ }
+
         activity.openDashboard(Animation.RIGHT);
     }
 
