@@ -46,7 +46,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                 .subscribe(
                         loggedInUser -> {
                             view.setLoadingIndicator(false);
-                            if(loggedInUser.isSuccess()){
+                            if(loggedInUser.getStatus() == null){
                                 view.onSuccessfulLogin(loggedInUser);
                             } else {
                                 if (loggedInUser.getStatus().equalsIgnoreCase("User not yet registered")){
