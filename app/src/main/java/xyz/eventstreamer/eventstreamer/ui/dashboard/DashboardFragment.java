@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.List;
@@ -122,23 +123,26 @@ public class DashboardFragment
         presenter.getEvents();
     }
 
-    @OnClick(R.id.iv_event_list)
-    public void onClickList(){
-        presenter.getEvents();
-    }
-
-    @OnClick(R.id.iv_event_map)
-    public void onClickMap(){
-
-    }
-
-    @OnClick(R.id.iv_event_profile)
-    public void onClickProfile(){
-        User user = sharedPreferenceUtil.retrieveObject(Keys.KEY_USER, User.class);
-        if(user == null){
-            activity.openLogin(Animation.LEFT);
-        } else {
-            activity.openProfile(Animation.LEFT);
+    @OnClick({R.id.iv_event_list, R.id.iv_event_map, R.id.iv_event_add, R.id.iv_event_profile})
+    public void onClickTab(View view){
+        switch(view.getId()) {
+            case R.id.iv_event_list:
+                presenter.getEvents();
+                break;
+            case R.id.iv_event_map:
+                // TODO
+                break;
+            case R.id.iv_event_add:
+                activity.openAddEvent(Animation.LEFT);
+                break;
+            case R.id.iv_event_profile:
+                User user = sharedPreferenceUtil.retrieveObject(Keys.KEY_USER, User.class);
+                if(user == null){
+                    activity.openLogin(Animation.LEFT);
+                } else {
+                    activity.openProfile(Animation.LEFT);
+                }
+                break;
         }
     }
 

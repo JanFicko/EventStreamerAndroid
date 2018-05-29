@@ -75,29 +75,29 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventAdapter
         void bind(int position){
             Event event = eventList.get(position);
 
-            /*if(TimeUtil.calculateMillisecondsIfLessThanOneDay(Long.valueOf(event.getDatum()))){
+            if(TimeUtil.calculateMillisecondsIfLessThanOneDay(Long.valueOf(event.getDatum()))){
                 ivEvent.setImageResource(R.drawable.ic_live_red);
             } else {
                 ivEvent.setImageResource(R.drawable.ic_live_black);
-            }*/
+            }
             ivEvent.setImageResource(R.drawable.ic_live_black);
 
             tvEventTitle.setText(event.getNaziv());
 
-            // TimeUtil.generateBackendDateDateFromMillis(Long.valueOf(event.getDatum()))
+
             if(event.getKategorija().size() != 0){
                 tvEventInfo.setText(
                         context.getString(
                                 R.string.dashboard_event_fill_category,
                                 event.getKategorija().get(0).getNaziv(),
-                                "15. Mar 2018"
+                                TimeUtil.generateBackendDateDateFromMillis(Long.valueOf(event.getDatum()))
                         )
                 );
             } else {
                 tvEventInfo.setText(
                         context.getString(
                                 R.string.dashboard_event_fill,
-                                "15. Mar 2018"
+                                TimeUtil.generateBackendDateDateFromMillis(Long.valueOf(event.getDatum()))
                         )
                 );
             }
