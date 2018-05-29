@@ -50,6 +50,10 @@
         <item>Politika</item>
     </string-array>
 
+    <!-- SEARCH -->
+    <string name="find_event_title">Iskanje po dogodkih</string>
+    <string name="find_event_search">Išči…</string>
+
 
     <!-- OTHERS -->
     <string name="error_no_internet">Ni internetne povezave</string>
