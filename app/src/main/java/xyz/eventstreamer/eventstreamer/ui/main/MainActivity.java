@@ -72,6 +72,11 @@ public class MainActivity
     }
 
     @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
     public void openLogin(int animationType) {
         loginFragment = LoginFragment.newInstance();
         if(loginPresenter == null){

@@ -102,7 +102,6 @@
                     android:id="@+id/et_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="datetime"
                     android:hint="@string/date" />
             </android.support.design.widget.TextInputLayout>
 
