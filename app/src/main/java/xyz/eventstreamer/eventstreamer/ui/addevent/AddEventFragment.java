@@ -229,11 +229,6 @@ public class AddEventFragment
     }
 
     @Override
-    public void setLoadingIndicator(boolean active) {
-        // TODO
-    }
-
-    @Override
     public void showNoInternet() {
         ToastUtil.toastLong(context, R.string.error_no_internet);
     }

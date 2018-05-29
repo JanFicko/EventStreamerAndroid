@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
+import xyz.eventstreamer.eventstreamer.ui.dialog.ProgressDialog;
 
 public abstract class BaseFragment extends Fragment {
 
     protected String TAG = "";
     protected Context context;
     protected BaseActivity baseActivity;
+    private ProgressDialog dfProgress;
 
     @Override
     public void onAttach(Context context) {
@@ -30,6 +32,8 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(setLayoutResId(), container, false);
+        dfProgress = new ProgressDialog();
+        dfProgress.setTargetFragment(this, 0);
         ButterKnife.bind(this, view);
         setupAfterBind();
         return view;
@@ -40,6 +44,33 @@ public abstract class BaseFragment extends Fragment {
 
     protected void setupAfterBind(){
 
+    }
+
+
+
+    public void setLoadingIndicator(boolean active) {
+        if (active) {
+            if (!dfProgress.isAdded()) {
+                try {
+                    dfProgress.show(getFragmentManager(), TAG);
+                } catch (IllegalStateException e) {
+                    //For fragments inside fragments
+                    try {
+                        dfProgress.show(getChildFragmentManager(), TAG);
+                    } catch (IllegalStateException ignore) {
+
+                    }
+                }
+            }
+        } else {
+            if (dfProgress.isAdded()) {
+                try {
+                    dfProgress.dismiss();
+                } catch (IllegalStateException e) {
+                    dfProgress.dismissAllowingStateLoss();
+                }
+            }
+        }
     }
 
 }

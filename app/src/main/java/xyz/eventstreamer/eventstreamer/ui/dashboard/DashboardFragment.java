@@ -148,7 +148,13 @@ MarkerClickListener {
     }
 
     @Override
+    public void onMarkerClick(Event event) {
+        Log.d(TAG, "hojla: " + event.getNaziv());
+    }
+
+    @Override
     public void setLoadingIndicator(boolean active) {
+        super.setLoadingIndicator(active);
         if(active){
             srlEvents.setRefreshing(true);
         } else {
@@ -191,10 +197,5 @@ MarkerClickListener {
                 }
                 break;
         }
-    }
-
-    @Override
-    public void onMarkerClick(Event event) {
-        Log.d(TAG, "hojla: " + event.getNaziv());
     }
 }

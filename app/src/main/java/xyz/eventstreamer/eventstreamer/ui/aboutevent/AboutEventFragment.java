@@ -59,12 +59,6 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
     public void showErrorMessage() {
         // TODO
     }
-
-    @Override
-    public void setLoadingIndicator(boolean active) {
-        // TODO
-    }
-
     @Override
     public void showNoInternet() {
         // TODO

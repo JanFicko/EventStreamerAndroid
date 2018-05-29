@@ -103,11 +103,6 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
     }
 
     @Override
-    public void setLoadingIndicator(boolean active) {
-        // TODO
-    }
-
-    @Override
     public void showNoInternet() {
         ToastUtil.toastLong(context, R.string.error_no_internet);
     }

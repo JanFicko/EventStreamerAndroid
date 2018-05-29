@@ -61,11 +61,6 @@ public class FindEventFragment extends BaseFragment implements FindEventContract
     }
 
     @Override
-    public void setLoadingIndicator(boolean active) {
-        // TODO
-    }
-
-    @Override
     public void showNoInternet() {
         // TODO
     }
