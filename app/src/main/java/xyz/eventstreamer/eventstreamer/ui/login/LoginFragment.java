@@ -39,8 +39,8 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     private MainActivity activity;
     private LoginContract.Presenter presenter;
     private SharedPreferenceUtil sharedPreferenceUtil = EventStreamer.getInstance().getSharedPreferenceUtil();
-
     private GoogleSignInClient mGoogleSignInClient;
+    private User user = new User();
 
     @BindView(R.id.tv_toolbar_title)
     TextView tvToolbarTitle;
@@ -126,6 +126,16 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         activity.openDashboard(Animation.RIGHT);
     }
 
+    @Override
+    public void registerGoogleUser() {
+        presenter.registerUser(user);
+    }
+
+    @Override
+    public void onSuccessfulRegistered() {
+        presenter.loginUser(user);
+    }
+
     @OnClick(R.id.sign_in_button)
     public void onClickSignInGoogle(){
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -149,7 +159,6 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-            User user = new User();
             user.setEmail(account.getEmail());
             user.setGeslo(account.getId());
             user.setIme(account.getGivenName());
