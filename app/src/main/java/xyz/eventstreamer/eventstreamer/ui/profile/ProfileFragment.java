@@ -112,6 +112,6 @@ public class ProfileFragment extends BaseFragment  {
 
     @OnClick(R.id.iv_back)
     public void onBackClick(){
-        activity.openDashboard(Animation.LEFT);
+        activity.openDashboard(Animation.RIGHT);
     }
 }
