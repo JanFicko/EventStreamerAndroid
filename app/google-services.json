@@ -1,0 +1,75 @@
+{
+  "project_info": {
+    "project_number": "581053174454",
+    "firebase_url": "https://sincere-nirvana-205617.firebaseio.com",
+    "project_id": "sincere-nirvana-205617",
+    "storage_bucket": "sincere-nirvana-205617.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:581053174454:android:951467675e8d6c64",
+        "android_client_info": {
+          "package_name": "xyz.eventstreamer.eventstreamer.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "581053174454-r6nqq57qvv4nmrgs7147qictulgurtdh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xyz.eventstreamer.eventstreamer.debug",
+            "certificate_hash": "9b51a9530f85edfe4141a79f3c890373bf67a67c"
+          }
+        },
+        {
+          "client_id": "581053174454-o4gth2d8ou008p348ep6sttvc0c3q8qa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xyz.eventstreamer.eventstreamer.debug",
+            "certificate_hash": "1b2167596a6851c22997dee5feb02efa854c9fa2"
+          }
+        },
+        {
+          "client_id": "581053174454-e21a8r7140gd0m6toc40sa1t0spgga5h.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "581053174454-1rfer0aj5k4ib3egcmriku6gq797vqo5.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "581053174454-d32fmr4rknrnff51kmjhc7mk5ogv338a.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "581053174454-e21a8r7140gd0m6toc40sa1t0spgga5h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDht5WtnLW084YrDU3Rr8yKI_HHF1VKWpk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "581053174454-e21a8r7140gd0m6toc40sa1t0spgga5h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
