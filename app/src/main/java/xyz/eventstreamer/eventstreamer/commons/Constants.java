@@ -6,5 +6,6 @@ public class Constants {
     public static final String DATABASE_NAME = "eventstreamer";
     public static final int DATABASE_VERSION = 1;
     public static final String CONTENT_AUTHORITY = "xyz.eventstreamer.eventstreamer";
+    public static final String SOCKET_LISTENER = "post";
 
 }
