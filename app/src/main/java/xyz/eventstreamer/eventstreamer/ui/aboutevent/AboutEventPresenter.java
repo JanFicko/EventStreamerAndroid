@@ -5,6 +5,8 @@ import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import xyz.eventstreamer.eventstreamer.data.post.PostRepository;
 import xyz.eventstreamer.eventstreamer.model.Event;
 import xyz.eventstreamer.eventstreamer.model.Post;
@@ -70,6 +72,29 @@ public class AboutEventPresenter implements AboutEventContract.Presenter {
 
         Disposable disposable = repository
                 .addPost(post)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe(
+                        posts -> {
+                            view.setLoadingIndicator(false);
+                            view.onPostSentSuccessfuly();
+                        },
+                        throwable -> {
+                            view.setLoadingIndicator(false);
+                            view.showErrorMessage();
+                        });
+
+        compositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void sendImage(RequestBody eventId, MultipartBody.Part image) {
+        view.setLoadingIndicator(true);
+
+        compositeDisposable.clear();
+
+        Disposable disposable = repository
+                .addPost(eventId, image)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(

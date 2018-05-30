@@ -5,6 +5,8 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import io.reactivex.Flowable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import xyz.eventstreamer.eventstreamer.EventStreamer;
 import xyz.eventstreamer.eventstreamer.data.RetrofitFactory;
 import xyz.eventstreamer.eventstreamer.data.post.PostDataSource;
@@ -37,6 +39,12 @@ public class PostRemoteDataSource implements PostDataSource {
     public Flowable<Post> addPost(Post post) {
         PostService postService = retrofitFactory.postService();
         return postService.addPost(post);
+    }
+
+    @Override
+    public Flowable<Post> addPost(RequestBody eventId, MultipartBody.Part image) {
+        PostService postService = retrofitFactory.postService();
+        return postService.sendImage(eventId, image);
     }
 
     @Override

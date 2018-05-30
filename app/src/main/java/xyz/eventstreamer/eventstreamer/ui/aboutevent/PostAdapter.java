@@ -1,5 +1,6 @@
 package xyz.eventstreamer.eventstreamer.ui.aboutevent;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,10 +19,12 @@ import xyz.eventstreamer.eventstreamer.BuildConfig;
 import xyz.eventstreamer.eventstreamer.R;
 import xyz.eventstreamer.eventstreamer.model.Event;
 import xyz.eventstreamer.eventstreamer.model.Post;
+import xyz.eventstreamer.eventstreamer.util.ConvertUnitUtil;
 import xyz.eventstreamer.eventstreamer.util.TimeUtil;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostAdapterViewHolder> {
 
+    private Context context;
     private List<Post> postList;
     private String eventId;
 
@@ -33,6 +36,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostAdapterVie
     @NonNull
     @Override
     public PostAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
         int layoutId = R.layout.item_post;
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(layoutId, parent, false);
@@ -73,9 +77,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostAdapterVie
 
             tvTime.setText(TimeUtil.generateCurrentTimeFromMillis(Long.valueOf(post.getDatum())));
             if(post.getKomentar() != null && post.getKomentar().length() != 0){
+                tvComment.setVisibility(View.VISIBLE);
+                ivComment.setVisibility(View.GONE);
                 tvComment.setText(post.getKomentar());
             } else if(post.getSlika() != null && post.getSlika().length() != 0){
-                Picasso.get().load(BuildConfig.SERVICE_URL + "/uploads/"+eventId+"/"+post.getSlika()).into(ivComment);
+                tvComment.setVisibility(View.INVISIBLE);
+                ivComment.setVisibility(View.VISIBLE);
+                Picasso.get()
+                        .load(BuildConfig.SERVICE_URL + "/uploads/"+eventId+"/"+post.getSlika())
+                        .placeholder(R.drawable.i_1527704977853)
+                        .resize(ConvertUnitUtil.convertDpToPixel(124, context),
+                                ConvertUnitUtil.convertDpToPixel(200, context))
+                        .into(ivComment);
             }
         }
 

@@ -5,6 +5,8 @@ import android.content.Context;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import xyz.eventstreamer.eventstreamer.EventStreamer;
 import xyz.eventstreamer.eventstreamer.data.AppDatabase;
 import xyz.eventstreamer.eventstreamer.data.post.PostDataSource;
@@ -45,6 +47,11 @@ public class PostLocalDataSource implements PostDataSource {
     @Override
     public Flowable<Post> addPost(Post post) {
         // TODO
+        return null;
+    }
+
+    @Override
+    public Flowable<Post> addPost(RequestBody eventId, MultipartBody.Part image) {
         return null;
     }
 

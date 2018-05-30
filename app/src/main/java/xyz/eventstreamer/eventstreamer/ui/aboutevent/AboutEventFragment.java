@@ -1,5 +1,6 @@
 package xyz.eventstreamer.eventstreamer.ui.aboutevent;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -21,6 +22,12 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +38,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import xyz.eventstreamer.eventstreamer.BuildConfig;
 import xyz.eventstreamer.eventstreamer.EventStreamer;
 import xyz.eventstreamer.eventstreamer.R;
@@ -234,12 +244,35 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == Constants.REQUEST_IMAGE_CAPTURE && resultCode == 0) {
+        if (requestCode == Constants.REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            Log.d("Slika -> ", imageBitmap.toString());
-//            slika.setImageBitmap(imageBitmap);
+            Bitmap imageBitmap = null;
+            if (extras != null) {
+                try {
+
+                    File f = new File(context.getCacheDir(), "slika");
+                    f.createNewFile();
+
+                    Bitmap bitmap = (Bitmap) extras.get("data");
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 2 /*ignored for PNG*/, bos);
+                    byte[] bitmapdata = bos.toByteArray();
+
+                    FileOutputStream fos = new FileOutputStream(f);
+                    fos.write(bitmapdata);
+                    fos.flush();
+                    fos.close();
+
+                    RequestBody eventId = RequestBody.create(MediaType.parse("text/plain"), event.getIdDogodek());
+
+                    RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), f);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("slika", f.getName(), reqFile);
+
+                    presenter.sendImage(eventId, body);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -309,4 +342,21 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
     public void showNoInternet() {
         presenter.getLocalPosts(event.getIdDogodek());
     }
+
+    private File persistImage(Bitmap bitmap, String name) {
+        File filesDir = activity.getFilesDir();
+        File imageFile = new File(filesDir, name + ".jpg");
+
+        OutputStream os;
+        try {
+            os = new FileOutputStream(imageFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
+        }
+        return imageFile;
+    }
+
 }

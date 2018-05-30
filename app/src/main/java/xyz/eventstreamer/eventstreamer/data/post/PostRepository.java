@@ -3,6 +3,8 @@ package xyz.eventstreamer.eventstreamer.data.post;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import xyz.eventstreamer.eventstreamer.model.Post;
 import xyz.eventstreamer.eventstreamer.model.database.PostEntity;
 
@@ -38,6 +40,11 @@ public class PostRepository implements PostDataSource {
     @Override
     public Flowable<Post> addPost(Post post) {
         return postRemoteDataSource.addPost(post);
+    }
+
+    @Override
+    public Flowable<Post> addPost(RequestBody eventId, MultipartBody.Part image) {
+        return postRemoteDataSource.addPost(eventId, image);
     }
 
     @Override

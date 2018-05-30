@@ -44,6 +44,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="4dp"
+        android:visibility="invisible"
         android:padding="4dp"
         android:textColor="@color/black"
         android:background="@drawable/bg_button_blue_transparent_round"
@@ -55,12 +56,13 @@
 
     <ImageView
         android:id="@+id/iv_comment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="124dp"
+        android:layout_height="200dp"
         android:layout_marginTop="4dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="4dp"
-        android:visibility="invisible"
+        tools:src="@drawable/i_1527704977853"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_line_separator"
         app:layout_constraintBottom_toBottomOf="parent"/>
