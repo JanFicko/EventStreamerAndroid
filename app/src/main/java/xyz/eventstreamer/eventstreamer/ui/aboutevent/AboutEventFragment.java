@@ -24,6 +24,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import xyz.eventstreamer.eventstreamer.BuildConfig;
 import xyz.eventstreamer.eventstreamer.EventStreamer;
 import xyz.eventstreamer.eventstreamer.R;
 import xyz.eventstreamer.eventstreamer.commons.Animation;
@@ -54,7 +55,7 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
     private Socket socket;
     {
         try {
-            socket = IO.socket("http://86.58.73.24:3001");
+            socket = IO.socket(BuildConfig.SOCKET_URL);
         } catch (URISyntaxException e) {}
     }
 

@@ -14,11 +14,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "SERVICE_URL", '"http://86.58.73.24:3000"'
+            buildConfigField "String", "SOCKET_URL", '"http://86.58.73.24:3001"'
         }
         debug {
             applicationIdSuffix ".debug"
             versionNameSuffix "-DEBUG"
             buildConfigField "String", "SERVICE_URL", '"http://86.58.73.24:3000"'
+            buildConfigField "String", "SOCKET_URL", '"http://86.58.73.24:3001"'
         }
     }
     compileOptions {
