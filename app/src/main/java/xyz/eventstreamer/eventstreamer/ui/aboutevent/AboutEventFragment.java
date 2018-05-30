@@ -1,6 +1,7 @@
 package xyz.eventstreamer.eventstreamer.ui.aboutevent;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -17,9 +19,12 @@ import xyz.eventstreamer.eventstreamer.EventStreamer;
 import xyz.eventstreamer.eventstreamer.R;
 import xyz.eventstreamer.eventstreamer.commons.Animation;
 import xyz.eventstreamer.eventstreamer.commons.Keys;
+import xyz.eventstreamer.eventstreamer.data.AppDatabase;
 import xyz.eventstreamer.eventstreamer.model.Event;
 import xyz.eventstreamer.eventstreamer.model.Post;
 import xyz.eventstreamer.eventstreamer.model.User;
+import xyz.eventstreamer.eventstreamer.model.database.EventEntity;
+import xyz.eventstreamer.eventstreamer.model.database.PostEntity;
 import xyz.eventstreamer.eventstreamer.ui.BaseFragment;
 import xyz.eventstreamer.eventstreamer.ui.main.MainActivity;
 import xyz.eventstreamer.eventstreamer.util.SharedPreferenceUtil;
@@ -33,6 +38,7 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
     private SharedPreferenceUtil sharedPreferenceUtil = EventStreamer.getInstance().getSharedPreferenceUtil();
     private Event event = new Event();
     private User user = new User();
+    private static AppDatabase appDatabase;
 
     @BindView(R.id.tv_toolbar_title)
     TextView tvToolbarTitle;
@@ -71,6 +77,7 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
     public void onAttach(Context context) {
         super.onAttach(context);
         activity = (MainActivity) baseActivity;
+        appDatabase = AppDatabase.getInstance(context);
     }
 
     @Override
@@ -146,6 +153,44 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
             ivNoPosts.setVisibility(View.INVISIBLE);
             rvPosts.setVisibility(View.VISIBLE);
             postAdapter.onUpdate(postList);
+
+            List<PostEntity> postEntityList = new ArrayList<>();
+            for(Post post : postList){
+                PostEntity postEntity = new PostEntity(
+                        post.getIdObjava(),
+                        post.getIdUporabnik(),
+                        post.getKomentar(),
+                        post.getSlika(),
+                        post.getDatum(),
+                        event.getIdDogodek()
+
+                );
+                postEntityList.add(postEntity);
+            }
+
+            new PostAsyncTask().execute(postEntityList);
+        }
+    }
+
+    @Override
+    public void showLocalPosts(List<Post> postList) {
+        if(postList == null || postList.size() == 0){
+            ivNoPosts.setVisibility(View.VISIBLE);
+            rvPosts.setVisibility(View.INVISIBLE);
+        } else {
+            ivNoPosts.setVisibility(View.INVISIBLE);
+            rvPosts.setVisibility(View.VISIBLE);
+            postAdapter.onUpdate(postList);
+        }
+    }
+
+    private static class PostAsyncTask extends AsyncTask<List<PostEntity>, Void, Void> {
+
+        @SafeVarargs
+        @Override
+        protected final Void doInBackground(List<PostEntity>... lists) {
+            appDatabase.postDao().bulkInsertPosts(lists[0]);
+            return null;
         }
     }
 
@@ -155,6 +200,6 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
     }
     @Override
     public void showNoInternet() {
-        ToastUtil.toastLong(context, R.string.error_no_internet);
+        presenter.getLocalPosts(event.getIdDogodek());
     }
 }

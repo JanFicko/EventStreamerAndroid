@@ -82,9 +82,4 @@ public class EventRepository implements EventDataSource {
         return eventLocalDataSource.getLocalEvents();
     }
 
-    @Override
-    public Flowable<long[]> addLocalEvent(List<EventEntity> eventList) {
-        return eventLocalDataSource.addLocalEvent(eventList);
-    }
-
 }

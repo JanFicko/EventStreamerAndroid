@@ -86,10 +86,5 @@ public class EventRemoteDataSource implements EventDataSource{
         return null;
     }
 
-    @Override
-    public Flowable<long[]> addLocalEvent(List<EventEntity> eventList) {
-        return null;
-    }
-
 
 }

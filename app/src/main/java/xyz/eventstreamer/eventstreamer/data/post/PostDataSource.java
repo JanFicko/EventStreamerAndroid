@@ -14,6 +14,4 @@ public interface PostDataSource {
 
     Flowable<List<PostEntity>> getLocalPosts(String eventId);
 
-    void addLocalPost(List<PostEntity> listPosts);
-
 }

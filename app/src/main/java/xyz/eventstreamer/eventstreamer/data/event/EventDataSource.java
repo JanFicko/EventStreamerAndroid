@@ -30,5 +30,4 @@ public interface EventDataSource {
 
     Flowable<List<EventEntity>> getLocalEvents();
 
-    Flowable<long[]> addLocalEvent(List<EventEntity> eventList);
 }

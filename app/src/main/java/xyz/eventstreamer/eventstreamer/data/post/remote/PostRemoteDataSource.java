@@ -44,6 +44,4 @@ public class PostRemoteDataSource implements PostDataSource {
         return null;
     }
 
-    @Override
-    public void addLocalPost(List<PostEntity> listPosts) { }
 }

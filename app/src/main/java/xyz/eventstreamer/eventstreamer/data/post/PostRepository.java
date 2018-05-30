@@ -45,8 +45,4 @@ public class PostRepository implements PostDataSource {
         return postLocalDataSource.getLocalPosts(eventId);
     }
 
-    @Override
-    public void addLocalPost(List<PostEntity> listPosts) {
-        postLocalDataSource.addLocalPost(listPosts);
-    }
 }

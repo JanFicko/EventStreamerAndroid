@@ -85,7 +85,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventAdapter
             tvEventTitle.setText(event.getNaziv());
 
 
-            if(event.getKategorija().size() != 0){
+            if(event.getKategorija() != null && event.getKategorija().size() != 0){
                 tvEventInfo.setText(
                         context.getString(
                                 R.string.dashboard_event_fill_category,

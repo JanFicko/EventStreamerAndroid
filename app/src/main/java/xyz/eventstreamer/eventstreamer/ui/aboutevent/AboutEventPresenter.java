@@ -1,10 +1,15 @@
 package xyz.eventstreamer.eventstreamer.ui.aboutevent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import xyz.eventstreamer.eventstreamer.data.post.PostRepository;
 import xyz.eventstreamer.eventstreamer.model.Event;
 import xyz.eventstreamer.eventstreamer.model.Post;
+import xyz.eventstreamer.eventstreamer.model.database.EventEntity;
+import xyz.eventstreamer.eventstreamer.model.database.PostEntity;
 import xyz.eventstreamer.eventstreamer.util.schedulers.BaseSchedulerProvider;
 
 public class AboutEventPresenter implements AboutEventContract.Presenter {
@@ -51,7 +56,7 @@ public class AboutEventPresenter implements AboutEventContract.Presenter {
                         },
                         throwable -> {
                             view.setLoadingIndicator(false);
-                            view.showErrorMessage();
+                            view.showNoInternet();
                         });
 
         compositeDisposable.add(disposable);
@@ -75,6 +80,39 @@ public class AboutEventPresenter implements AboutEventContract.Presenter {
                         throwable -> {
                             view.setLoadingIndicator(false);
                             view.showErrorMessage();
+                        });
+
+        compositeDisposable.add(disposable);
+    }
+
+    @Override
+    public void getLocalPosts(String eventId) {
+        view.setLoadingIndicator(true);
+
+        compositeDisposable.clear();
+
+        Disposable disposable = repository
+                .getLocalPosts(eventId)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe(
+                        posts -> {
+                            view.setLoadingIndicator(false);
+                            List<Post> postList = new ArrayList<>();
+                            for(PostEntity postEntity : posts){
+                                Post post = new Post();
+                                post.setIdObjava(postEntity.get_id());
+                                post.setIdUporabnik(postEntity.getId_uporabnik());
+                                post.setKomentar(postEntity.getKomentar());
+                                post.setSlika(postEntity.getSlika());
+                                post.setDatum(postEntity.getDatum());
+                                postList.add(post);
+                            }
+                            view.showLocalPosts(postList);
+                        },
+                        throwable -> {
+                            view.setLoadingIndicator(false);
+                            view.showLocalPosts(null);
                         });
 
         compositeDisposable.add(disposable);

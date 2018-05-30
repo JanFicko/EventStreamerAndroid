@@ -10,6 +10,7 @@ public interface DashboardContract {
 
     interface View extends BaseView<Presenter> {
         void showEventsView(List<Event> eventList);
+        void showLocalEventsView(List<Event> eventList);
         void showListView();
         void showMapView();
         void showErrorMessage();
@@ -18,7 +19,6 @@ public interface DashboardContract {
     interface Presenter extends BasePresenter {
         void getEvents();
         void getLocalEvents();
-        void insertLocalEvents(List<Event> eventList);
     }
 
 }

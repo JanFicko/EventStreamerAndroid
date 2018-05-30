@@ -53,8 +53,4 @@ public class PostLocalDataSource implements PostDataSource {
         return appDatabase.postDao().loadAllPosts(eventId);
     }
 
-    @Override
-    public void addLocalPost(List<PostEntity> listPosts) {
-        appDatabase.postDao().bulkInsertPosts(listPosts);
-    }
 }

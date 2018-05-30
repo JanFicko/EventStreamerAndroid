@@ -1,9 +1,12 @@
 package xyz.eventstreamer.eventstreamer.ui.dashboard;
 
 import android.Manifest;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -18,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,9 +30,11 @@ import xyz.eventstreamer.eventstreamer.EventStreamer;
 import xyz.eventstreamer.eventstreamer.R;
 import xyz.eventstreamer.eventstreamer.commons.Animation;
 import xyz.eventstreamer.eventstreamer.commons.Keys;
+import xyz.eventstreamer.eventstreamer.data.AppDatabase;
 import xyz.eventstreamer.eventstreamer.model.Event;
 import xyz.eventstreamer.eventstreamer.model.Location;
 import xyz.eventstreamer.eventstreamer.model.User;
+import xyz.eventstreamer.eventstreamer.model.database.EventEntity;
 import xyz.eventstreamer.eventstreamer.ui.BaseFragment;
 import xyz.eventstreamer.eventstreamer.ui.main.MainActivity;
 import xyz.eventstreamer.eventstreamer.util.SharedPreferenceUtil;
@@ -48,6 +54,8 @@ MarkerClickListener {
     private DashboardContract.Presenter presenter;
     private EventAdapter eventAdapter;
     private User user;
+    private static AppDatabase appDatabase;
+
 
     @BindView(R.id.srl_events)
     SwipeRefreshLayout srlEvents;
@@ -87,6 +95,7 @@ MarkerClickListener {
     public void onAttach(Context context) {
         super.onAttach(context);
         activity = (MainActivity) baseActivity;
+        appDatabase = AppDatabase.getInstance(context);
     }
 
     @Override
@@ -125,10 +134,10 @@ MarkerClickListener {
     public void showEventsView(List<Event> eventList) {
         if(eventList == null || eventList.size() == 0){
             ivNoEvents.setVisibility(View.VISIBLE);
-            srlEvents.setVisibility(View.INVISIBLE);
+            rvEvents.setVisibility(View.INVISIBLE);
         } else {
             ivNoEvents.setVisibility(View.INVISIBLE);
-            srlEvents.setVisibility(View.VISIBLE);
+            rvEvents.setVisibility(View.VISIBLE);
 
             eventAdapter.updateList(eventList);
 
@@ -139,7 +148,51 @@ MarkerClickListener {
                 }
             }
 
-            presenter.insertLocalEvents(eventList);
+
+            List<EventEntity> eventEntityList = new ArrayList<>();
+            for(Event event : eventList){
+                EventEntity eventEntity = new EventEntity(
+                        event.getIdDogodek(),
+                        event.getNaziv(),
+                        event.getOpis(),
+                        event.getDatum(),
+                        event.getIdUporabnik()
+                );
+                eventEntityList.add(eventEntity);
+            }
+
+            new EventAsyncTask().execute(eventEntityList);
+
+        }
+    }
+
+    private static class EventAsyncTask extends AsyncTask<List<EventEntity>, Void, Void> {
+
+        @SafeVarargs
+        @Override
+        protected final Void doInBackground(List<EventEntity>... lists) {
+            appDatabase.eventDao().bulkInsertEvents(lists[0]);
+            return null;
+        }
+    }
+
+    @Override
+    public void showLocalEventsView(List<Event> eventList) {
+        if(eventList == null || eventList.size() == 0){
+            ivNoEvents.setVisibility(View.VISIBLE);
+            rvEvents.setVisibility(View.INVISIBLE);
+        } else {
+            ivNoEvents.setVisibility(View.INVISIBLE);
+            rvEvents.setVisibility(View.VISIBLE);
+
+            eventAdapter.updateList(eventList);
+
+            for (Event event : eventList) {
+                if (event.getLokacija() != null && event.getLokacija().size() != 0) {
+                    Location location = event.getLokacija().get(0);
+                    mvMap.addMarker(event, location);
+                }
+            }
         }
     }
 
@@ -177,8 +230,7 @@ MarkerClickListener {
 
     @Override
     public void showErrorMessage() {
-        presenter.getLocalEvents();
-        ToastUtil.toastLong(context, R.string.error_events_unsuccessful);
+        /* UNUSED */
     }
 
     @Override

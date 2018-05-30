@@ -2,6 +2,7 @@ package xyz.eventstreamer.eventstreamer.data.event.local;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class EventLocalDataSource implements EventDataSource{
 
     private EventLocalDataSource(Context context,
                                  BaseSchedulerProvider schedulerProvider) {
-        appDatabase = AppDatabase.getInstance(EventStreamer.getInstance().getApplicationContext());
+        appDatabase = AppDatabase.getInstance(context);
     }
 
     public static EventLocalDataSource getInstance(
@@ -86,11 +87,5 @@ public class EventLocalDataSource implements EventDataSource{
     @Override
     public Flowable<List<EventEntity>> getLocalEvents() {
         return appDatabase.eventDao().loadAllEvents();
-    }
-
-    @Override
-    public Flowable<long[]> addLocalEvent(List<EventEntity> eventList) {
-        appDatabase.eventDao().bulkInsertEvents(eventList);
-        return null;
     }
 }

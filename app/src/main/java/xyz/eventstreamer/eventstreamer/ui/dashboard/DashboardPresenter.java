@@ -1,16 +1,22 @@
 package xyz.eventstreamer.eventstreamer.ui.dashboard;
 
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import xyz.eventstreamer.eventstreamer.EventStreamer;
+import xyz.eventstreamer.eventstreamer.data.AppDatabase;
 import xyz.eventstreamer.eventstreamer.data.event.EventRepository;
 import xyz.eventstreamer.eventstreamer.model.Event;
+import xyz.eventstreamer.eventstreamer.model.User;
 import xyz.eventstreamer.eventstreamer.model.database.EventEntity;
 import xyz.eventstreamer.eventstreamer.util.schedulers.BaseSchedulerProvider;
 
@@ -51,6 +57,7 @@ public class DashboardPresenter implements DashboardContract.Presenter {
 
         Disposable disposable = repository
                 .getEvents()
+                .timeout(3, TimeUnit.SECONDS)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(
@@ -59,11 +66,8 @@ public class DashboardPresenter implements DashboardContract.Presenter {
                             view.showEventsView(events);
                         },
                         throwable -> {
-                            if(throwable instanceof ConnectException){
-                                view.showNoInternet();
-                            }
                             view.setLoadingIndicator(false);
-                            view.showErrorMessage();
+                            view.showNoInternet();
                         });
 
         compositeDisposable.add(disposable);
@@ -71,7 +75,7 @@ public class DashboardPresenter implements DashboardContract.Presenter {
 
     @Override
     public void getLocalEvents() {
-        /*view.setLoadingIndicator(true);
+        view.setLoadingIndicator(true);
 
         compositeDisposable.clear();
 
@@ -90,43 +94,16 @@ public class DashboardPresenter implements DashboardContract.Presenter {
                                 event.setOpis(eventEntity.getOpis());
                                 event.setDatum(eventEntity.getDatum());
                                 event.setIdUporabnik(eventEntity.getId_uporabnik());
+                                eventList.add(event);
                             }
-                            view.showEventsView(eventList);
+                            view.showLocalEventsView(eventList);
                         },
                         throwable -> {
-                            if(throwable instanceof ConnectException){
-                                view.showNoInternet();
-                            }
                             view.setLoadingIndicator(false);
-                            view.showErrorMessage();
+                            view.showLocalEventsView(null);
                         });
 
-        compositeDisposable.add(disposable);*/
+        compositeDisposable.add(disposable);
     }
 
-    @Override
-    public void insertLocalEvents(List<Event> eventList) {
-        /*compositeDisposable.clear();
-
-        List<EventEntity> eventEntityList = new ArrayList<>();
-        for(Event event : eventList){
-            EventEntity eventEntity = new EventEntity(
-                    event.getIdDogodek(),
-                    event.getNaziv(),
-                    event.getOpis(),
-                    event.getDatum(),
-                    event.getIdUporabnik()
-            );
-            eventEntityList.add(eventEntity);
-        }
-
-        Disposable disposable = repository.addLocalEvent(eventEntityList)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .subscribe(
-                        events -> { },
-                        throwable -> { });
-
-        compositeDisposable.add(disposable);*/
-    }
 }

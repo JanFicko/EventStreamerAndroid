@@ -12,12 +12,14 @@ public interface AboutEventContract {
 
     interface View extends BaseView<Presenter> {
         void showPosts(List<Post> postList);
+        void showLocalPosts(List<Post> postList);
         void showErrorMessage();
     }
 
     interface Presenter extends BasePresenter {
         void getPosts(Event event);
         void sendPost(Post post);
+        void getLocalPosts(String eventId);
     }
 
 }
