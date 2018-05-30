@@ -75,7 +75,7 @@ public class AboutEventPresenter implements AboutEventContract.Presenter {
                 .subscribe(
                         posts -> {
                             view.setLoadingIndicator(false);
-                            // TODO
+                            view.onPostSentSuccessfuly();
                         },
                         throwable -> {
                             view.setLoadingIndicator(false);

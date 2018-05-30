@@ -3,7 +3,9 @@ package xyz.eventstreamer.eventstreamer.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Location extends BaseResponse {
+import java.io.Serializable;
+
+public class Location extends BaseResponse implements Serializable {
 
     @SerializedName("_id")
     @Expose

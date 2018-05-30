@@ -16,7 +16,7 @@ public class TimeUtil {
     public static String generateCurrentTimeAndDateFromMillis(long millis) {
         final Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
-        return new SimpleDateFormat("d. MMM yyyy - HH:mm", Locale.getDefault())
+        return new SimpleDateFormat("d. MMM yyyy HH:mm", Locale.getDefault())
                 .format(calendar.getTime());
     }
 

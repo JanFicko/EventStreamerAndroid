@@ -3,9 +3,10 @@ package xyz.eventstreamer.eventstreamer.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Post extends BaseResponse {
+public class Post extends BaseResponse implements Serializable {
 
     @SerializedName("_id")
     @Expose
@@ -22,6 +23,9 @@ public class Post extends BaseResponse {
     @SerializedName("datum")
     @Expose
     private String datum;
+    @SerializedName("id_dogodek")
+    @Expose
+    private String id_dogodek;
     @SerializedName("like")
     @Expose
     private List<Like> like;
@@ -74,5 +78,13 @@ public class Post extends BaseResponse {
 
     public void setLike(List<Like> like) {
         this.like = like;
+    }
+
+    public String getIdDogodek() {
+        return id_dogodek;
+    }
+
+    public void setIdDogodek(String id_dogodek) {
+        this.id_dogodek = id_dogodek;
     }
 }

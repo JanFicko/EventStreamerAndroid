@@ -35,6 +35,9 @@ public class Event extends BaseResponse implements Serializable {
     @SerializedName("id_uporabnik")
     @Expose
     private String id_uporabnik;
+    @SerializedName("__v")
+    @Expose
+    private String __v;
 
     public Event() {}
 
@@ -108,5 +111,13 @@ public class Event extends BaseResponse implements Serializable {
 
     public void setIdUporabnik(String id_uporabnik) {
         this.id_uporabnik = id_uporabnik;
+    }
+
+    public String getVerzija() {
+        return __v;
+    }
+
+    public void setVerzija(String __v) {
+        this.__v = __v;
     }
 }

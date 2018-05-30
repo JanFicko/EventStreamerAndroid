@@ -6,24 +6,28 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 import xyz.eventstreamer.eventstreamer.BuildConfig;
 import xyz.eventstreamer.eventstreamer.EventStreamer;
 import xyz.eventstreamer.eventstreamer.R;
@@ -39,6 +43,7 @@ import xyz.eventstreamer.eventstreamer.model.database.PostEntity;
 import xyz.eventstreamer.eventstreamer.ui.BaseFragment;
 import xyz.eventstreamer.eventstreamer.ui.main.MainActivity;
 import xyz.eventstreamer.eventstreamer.util.SharedPreferenceUtil;
+import xyz.eventstreamer.eventstreamer.util.TimeUtil;
 import xyz.eventstreamer.eventstreamer.util.ToastUtil;
 
 public class AboutEventFragment extends BaseFragment implements AboutEventContract.View {
@@ -51,16 +56,15 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
     private User user = new User();
     private static AppDatabase appDatabase;
     private List<Post> postList = new ArrayList<>();
-
     private Socket socket;
-    {
-        try {
-            socket = IO.socket(BuildConfig.SOCKET_URL);
-        } catch (URISyntaxException e) {}
-    }
+    private Gson gson;
 
     @BindView(R.id.tv_toolbar_title)
     TextView tvToolbarTitle;
+    @BindView(R.id.tv_date)
+    TextView tvDate;
+    @BindView(R.id.tv_description)
+    TextView tvDescription;
     @BindView(R.id.rv_posts)
     RecyclerView rvPosts;
     @BindView(R.id.iv_no_posts)
@@ -74,26 +78,36 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
     @BindView(R.id.iv_send)
     ImageView ivSend;
 
-    private Emitter.Listener onNewMessage = new Emitter.Listener() {
+    private Emitter.Listener onConnect = args -> activity.runOnUiThread(() -> {
+        Log.d(TAG, "onConnect");
+    });
 
-        @Override
-        public void call(final Object... args) {
-            activity.runOnUiThread(() -> {
-                JSONObject data = (JSONObject) args[0];
-                Post post = new Post();
-                try {
-                    post.setKomentar(data.getString("comment"));
-                    post.setKomentar(data.getString("image"));
-                } catch (JSONException e) {
-                    return;
-                }
-                postList.add(post);
-                if(postAdapter != null){
-                    postAdapter.onUpdate(postList);
-                }
-            });
+    private Emitter.Listener onDisconnect = args -> activity.runOnUiThread(() -> {
+        Log.d(TAG, "onDisconnect");
+    });
+
+    private Emitter.Listener onConnectError = args -> activity.runOnUiThread(() -> {
+        Log.d(TAG, "onConnectError");
+    });
+
+    private Emitter.Listener onNewPost = args -> activity.runOnUiThread(() -> {
+        JSONObject data = (JSONObject) args[0];
+
+        try {
+            Event event = gson.fromJson(data.toString(), Event.class);
+
+            Post post = event.getObjava().get(event.getObjava().size() - 1);
+            postList.add(post);
+            if(postAdapter != null){
+                rvPosts.smoothScrollToPosition(postList.size()-1);
+                postAdapter.onUpdate(postList);
+            }
+
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
         }
-    };
+
+    });
 
     public static AboutEventFragment newInstance(Event event) {
         Bundle args = new Bundle();
@@ -124,7 +138,15 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        socket.on(Constants.SOCKET_LISTENER, onNewMessage);
+        gson = new GsonBuilder().create();
+
+        EventStreamer app = (EventStreamer) activity.getApplication();
+        socket = app.getSocket();
+        socket.on(Socket.EVENT_CONNECT, onConnect);
+        socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
+        socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
+        socket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+        socket.on(Constants.SOCKET_LISTENER, onNewPost);
         socket.connect();
     }
 
@@ -146,8 +168,14 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
                 }
 
                 tvToolbarTitle.setText(event.getNaziv());
+                tvDate.setText(TimeUtil.generateCurrentTimeAndDateFromMillis(Long.valueOf(event.getDatum())));
+                tvDescription.setText(event.getOpis());
 
-                rvPosts.setLayoutManager(new LinearLayoutManager(context));
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                layoutManager.setReverseLayout(true);
+                layoutManager.setStackFromEnd(true);
+
+                rvPosts.setLayoutManager(layoutManager);
                 rvPosts.setHasFixedSize(true);
                 postAdapter = new PostAdapter(null, event.getIdDogodek());
                 rvPosts.setAdapter(postAdapter);
@@ -170,7 +198,11 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
         super.onDestroy();
 
         socket.disconnect();
-        socket.off(Constants.SOCKET_LISTENER, onNewMessage);
+        socket.off(Socket.EVENT_CONNECT, onConnect);
+        socket.off(Socket.EVENT_DISCONNECT, onDisconnect);
+        socket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
+        socket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+        socket.off(Constants.SOCKET_LISTENER, onNewPost);
     }
 
     @OnClick(R.id.iv_back)
@@ -183,8 +215,7 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
         if(!etComment.getText().toString().isEmpty()){
             Post post = new Post();
             post.setKomentar(etComment.getText().toString());
-            post.setIdObjava(event.getIdDogodek());
-            post.setIdUporabnik(user.getIdUporabnik());
+            post.setIdDogodek(event.getIdDogodek());
             presenter.sendPost(post);
         }
     }
@@ -240,6 +271,12 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
             rvPosts.setVisibility(View.VISIBLE);
             postAdapter.onUpdate(postList);
         }
+    }
+
+    @Override
+    public void onPostSentSuccessfuly() {
+        etComment.setText("");
+        etComment.clearFocus();
     }
 
     private static class PostAsyncTask extends AsyncTask<List<PostEntity>, Void, Void> {

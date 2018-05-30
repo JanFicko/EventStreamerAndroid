@@ -2,6 +2,10 @@ package xyz.eventstreamer.eventstreamer;
 
 import android.app.Application;
 
+import java.net.URISyntaxException;
+
+import io.socket.client.IO;
+import io.socket.client.Socket;
 import xyz.eventstreamer.eventstreamer.data.RetrofitFactory;
 import xyz.eventstreamer.eventstreamer.util.SharedPreferenceUtil;
 
@@ -13,6 +17,14 @@ public class EventStreamer extends Application {
 
     public static EventStreamer getInstance() {
         return instance;
+    }
+
+    private Socket socket;{
+        try {
+            socket = IO.socket(BuildConfig.SOCKET_URL);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -37,6 +49,10 @@ public class EventStreamer extends Application {
         } else {
             throw new RuntimeException("SharedPreferenceUtil instance must be initialized");
         }
+    }
+
+    public Socket getSocket() {
+        return socket;
     }
 
 }

@@ -13,6 +13,7 @@ public interface AboutEventContract {
     interface View extends BaseView<Presenter> {
         void showPosts(List<Post> postList);
         void showLocalPosts(List<Post> postList);
+        void onPostSentSuccessfuly();
         void showErrorMessage();
     }
 

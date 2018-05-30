@@ -3,7 +3,7 @@ package xyz.eventstreamer.eventstreamer.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BaseResponse {
+public class BaseResponse  {
 
     /* Base parameters, if any, here if service returns same data after every call. */
     @SerializedName("success")
