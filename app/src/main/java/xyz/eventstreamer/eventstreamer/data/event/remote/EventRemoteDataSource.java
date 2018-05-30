@@ -10,6 +10,7 @@ import xyz.eventstreamer.eventstreamer.data.RetrofitFactory;
 import xyz.eventstreamer.eventstreamer.data.event.EventDataSource;
 import xyz.eventstreamer.eventstreamer.data.event.EventService;
 import xyz.eventstreamer.eventstreamer.model.Event;
+import xyz.eventstreamer.eventstreamer.model.database.EventEntity;
 
 public class EventRemoteDataSource implements EventDataSource{
 
@@ -78,6 +79,16 @@ public class EventRemoteDataSource implements EventDataSource{
     public Flowable<Event> addCategory(Event event) {
         EventService eventService = retrofitFactory.eventService();
         return eventService.addCategory(event);
+    }
+
+    @Override
+    public Flowable<List<EventEntity>> getLocalEvents() {
+        return null;
+    }
+
+    @Override
+    public Flowable<long[]> addLocalEvent(List<EventEntity> eventList) {
+        return null;
     }
 
 

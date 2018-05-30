@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import xyz.eventstreamer.eventstreamer.model.Event;
+import xyz.eventstreamer.eventstreamer.model.database.EventEntity;
 
 public interface EventDataSource {
 
@@ -26,4 +27,8 @@ public interface EventDataSource {
     Flowable<Event> addLocation(Event event);
 
     Flowable<Event> addCategory(Event event);
+
+    Flowable<List<EventEntity>> getLocalEvents();
+
+    Flowable<long[]> addLocalEvent(List<EventEntity> eventList);
 }

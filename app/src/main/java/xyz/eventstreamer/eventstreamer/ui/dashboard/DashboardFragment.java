@@ -32,6 +32,7 @@ import xyz.eventstreamer.eventstreamer.model.User;
 import xyz.eventstreamer.eventstreamer.ui.BaseFragment;
 import xyz.eventstreamer.eventstreamer.ui.main.MainActivity;
 import xyz.eventstreamer.eventstreamer.util.SharedPreferenceUtil;
+import xyz.eventstreamer.eventstreamer.util.ToastUtil;
 
 public class DashboardFragment
         extends
@@ -62,6 +63,8 @@ MarkerClickListener {
     ImageView ivAddEvent;
     @BindView(R.id.iv_event_profile)
     ImageView ivProfile;
+    @BindView(R.id.iv_no_events)
+    ImageView ivNoEvents;
 
     public static DashboardFragment newInstance() {
         Bundle args = new Bundle();
@@ -120,13 +123,23 @@ MarkerClickListener {
 
     @Override
     public void showEventsView(List<Event> eventList) {
-        eventAdapter.updateList(eventList);
+        if(eventList == null || eventList.size() == 0){
+            ivNoEvents.setVisibility(View.VISIBLE);
+            srlEvents.setVisibility(View.INVISIBLE);
+        } else {
+            ivNoEvents.setVisibility(View.INVISIBLE);
+            srlEvents.setVisibility(View.VISIBLE);
 
-        for(Event event : eventList){
-            if(event.getLokacija() != null && event.getLokacija().size() != 0) {
-                Location location = event.getLokacija().get(0);
-                mvMap.addMarker(event, location);
+            eventAdapter.updateList(eventList);
+
+            for(Event event : eventList){
+                if(event.getLokacija() != null && event.getLokacija().size() != 0) {
+                    Location location = event.getLokacija().get(0);
+                    mvMap.addMarker(event, location);
+                }
             }
+
+            presenter.insertLocalEvents(eventList);
         }
     }
 
@@ -164,12 +177,13 @@ MarkerClickListener {
 
     @Override
     public void showErrorMessage() {
-        // TODO
+        presenter.getLocalEvents();
+        ToastUtil.toastLong(context, R.string.error_events_unsuccessful);
     }
 
     @Override
     public void showNoInternet() {
-        // TODO
+        presenter.getLocalEvents();
     }
 
     @Override

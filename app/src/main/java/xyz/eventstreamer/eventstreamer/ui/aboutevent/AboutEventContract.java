@@ -17,6 +17,7 @@ public interface AboutEventContract {
 
     interface Presenter extends BasePresenter {
         void getPosts(Event event);
+        void sendPost(Post post);
     }
 
 }

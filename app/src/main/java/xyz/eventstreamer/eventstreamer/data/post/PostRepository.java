@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import xyz.eventstreamer.eventstreamer.model.Post;
+import xyz.eventstreamer.eventstreamer.model.database.PostEntity;
 
 public class PostRepository implements PostDataSource {
 
@@ -37,5 +38,15 @@ public class PostRepository implements PostDataSource {
     @Override
     public Flowable<Post> addPost(Post post) {
         return postRemoteDataSource.addPost(post);
+    }
+
+    @Override
+    public Flowable<List<PostEntity>> getLocalPosts(String eventId) {
+        return postLocalDataSource.getLocalPosts(eventId);
+    }
+
+    @Override
+    public void addLocalPost(List<PostEntity> listPosts) {
+        postLocalDataSource.addLocalPost(listPosts);
     }
 }

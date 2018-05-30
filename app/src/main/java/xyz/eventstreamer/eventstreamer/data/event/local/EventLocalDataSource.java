@@ -7,18 +7,22 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import xyz.eventstreamer.eventstreamer.EventStreamer;
+import xyz.eventstreamer.eventstreamer.data.AppDatabase;
 import xyz.eventstreamer.eventstreamer.data.RetrofitFactory;
 import xyz.eventstreamer.eventstreamer.data.event.EventDataSource;
 import xyz.eventstreamer.eventstreamer.model.Event;
+import xyz.eventstreamer.eventstreamer.model.database.EventEntity;
 import xyz.eventstreamer.eventstreamer.util.schedulers.BaseSchedulerProvider;
 
 public class EventLocalDataSource implements EventDataSource{
 
     private static EventLocalDataSource INSTANCE;
 
+    private AppDatabase appDatabase;
+
     private EventLocalDataSource(Context context,
                                  BaseSchedulerProvider schedulerProvider) {
-        // TODO
+        appDatabase = AppDatabase.getInstance(EventStreamer.getInstance().getApplicationContext());
     }
 
     public static EventLocalDataSource getInstance(
@@ -36,55 +40,57 @@ public class EventLocalDataSource implements EventDataSource{
 
     @Override
     public Flowable<List<Event>> getEvents() {
-        // TODO
         return null;
     }
 
     @Override
     public Flowable<Event> getEventById(@NonNull String eventId) {
-        // TODO
         return null;
     }
 
     @Override
     public Flowable<List<Event>> getEventByQuery(@NonNull String query) {
-        // TODO
         return null;
     }
 
     @Override
     public Flowable<Event> addEvent(Event event) {
-        // TODO
         return null;
     }
 
     @Override
     public Flowable<Event> removeEvent(Event event) {
-        // TODO
         return null;
     }
 
     @Override
     public Flowable<Event> updateEvent(Event event) {
-        // TODO
         return null;
     }
 
     @Override
     public Flowable<Event> addHashtag(Event event) {
-        // TODO
         return null;
     }
 
     @Override
     public Flowable<Event> addLocation(Event event) {
-        // TODO
         return null;
     }
 
     @Override
     public Flowable<Event> addCategory(Event event) {
-        // TODO
+        return null;
+    }
+
+    @Override
+    public Flowable<List<EventEntity>> getLocalEvents() {
+        return appDatabase.eventDao().loadAllEvents();
+    }
+
+    @Override
+    public Flowable<long[]> addLocalEvent(List<EventEntity> eventList) {
+        appDatabase.eventDao().bulkInsertEvents(eventList);
         return null;
     }
 }

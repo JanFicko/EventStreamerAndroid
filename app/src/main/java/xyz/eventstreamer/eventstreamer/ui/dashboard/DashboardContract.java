@@ -17,6 +17,8 @@ public interface DashboardContract {
 
     interface Presenter extends BasePresenter {
         void getEvents();
+        void getLocalEvents();
+        void insertLocalEvents(List<Event> eventList);
     }
 
 }

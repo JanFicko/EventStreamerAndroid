@@ -23,6 +23,7 @@
     <string name="cancel">Prekliči</string>
     <string name="event">Dogodek</string>
     <string name="find_event">Poišči dogodek</string>
+    <string name="comment">Komentar</string>
 
     <!-- LOGIN -->
     <string name="login_title">Prijava v aplikacijo</string>
@@ -66,5 +67,6 @@
     <string name="error_no_category_picked">Izbrana ni nobena kategorija</string>
     <string name="error_no_location_picked">Izbrana ni nobena lokacija</string>
     <string name="error_search_event_unsuccessful">Iskanje dogodka neuspešno</string>
+    <string name="error_events_unsuccessful">Pridobivanje dogodkov neuspešno</string>
 
 </resources>

@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import xyz.eventstreamer.eventstreamer.model.Event;
+import xyz.eventstreamer.eventstreamer.model.database.EventEntity;
 
 public class EventRepository implements EventDataSource {
 
@@ -74,6 +75,16 @@ public class EventRepository implements EventDataSource {
     @Override
     public Flowable<Event> addCategory(Event event) {
         return eventRemoteDataSource.addCategory(event);
+    }
+
+    @Override
+    public Flowable<List<EventEntity>> getLocalEvents() {
+        return eventLocalDataSource.getLocalEvents();
+    }
+
+    @Override
+    public Flowable<long[]> addLocalEvent(List<EventEntity> eventList) {
+        return eventLocalDataSource.addLocalEvent(eventList);
     }
 
 }

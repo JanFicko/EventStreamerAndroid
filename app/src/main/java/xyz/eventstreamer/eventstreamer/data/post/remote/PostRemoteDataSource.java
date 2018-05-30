@@ -10,6 +10,7 @@ import xyz.eventstreamer.eventstreamer.data.RetrofitFactory;
 import xyz.eventstreamer.eventstreamer.data.post.PostDataSource;
 import xyz.eventstreamer.eventstreamer.data.post.PostService;
 import xyz.eventstreamer.eventstreamer.model.Post;
+import xyz.eventstreamer.eventstreamer.model.database.PostEntity;
 
 public class PostRemoteDataSource implements PostDataSource {
 
@@ -37,4 +38,12 @@ public class PostRemoteDataSource implements PostDataSource {
         PostService postService = retrofitFactory.postService();
         return postService.addPost(post);
     }
+
+    @Override
+    public Flowable<List<PostEntity>> getLocalPosts(String eventId) {
+        return null;
+    }
+
+    @Override
+    public void addLocalPost(List<PostEntity> listPosts) { }
 }

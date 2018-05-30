@@ -24,6 +24,17 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <ImageView
+        android:id="@+id/iv_no_events"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_sadface"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/iv_event_list"/>
+
     <xyz.eventstreamer.eventstreamer.ui.dashboard.MapView
         android:id="@+id/mv_map"
         android:layout_width="0dp"

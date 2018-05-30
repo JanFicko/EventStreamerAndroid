@@ -4,6 +4,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import xyz.eventstreamer.eventstreamer.data.post.PostRepository;
 import xyz.eventstreamer.eventstreamer.model.Event;
+import xyz.eventstreamer.eventstreamer.model.Post;
 import xyz.eventstreamer.eventstreamer.util.schedulers.BaseSchedulerProvider;
 
 public class AboutEventPresenter implements AboutEventContract.Presenter {
@@ -55,5 +56,28 @@ public class AboutEventPresenter implements AboutEventContract.Presenter {
 
         compositeDisposable.add(disposable);
     }
-    
+
+    @Override
+    public void sendPost(Post post) {
+        view.setLoadingIndicator(true);
+
+        compositeDisposable.clear();
+
+        Disposable disposable = repository
+                .addPost(post)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe(
+                        posts -> {
+                            view.setLoadingIndicator(false);
+                            // TODO
+                        },
+                        throwable -> {
+                            view.setLoadingIndicator(false);
+                            view.showErrorMessage();
+                        });
+
+        compositeDisposable.add(disposable);
+    }
+
 }
