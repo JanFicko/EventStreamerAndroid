@@ -1,11 +1,15 @@
 package xyz.eventstreamer.eventstreamer.ui.aboutevent;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,6 +25,7 @@ import org.json.JSONObject;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import xyz.eventstreamer.eventstreamer.commons.Constants;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,6 +45,9 @@ import xyz.eventstreamer.eventstreamer.ui.BaseFragment;
 import xyz.eventstreamer.eventstreamer.ui.main.MainActivity;
 import xyz.eventstreamer.eventstreamer.util.SharedPreferenceUtil;
 import xyz.eventstreamer.eventstreamer.util.ToastUtil;
+
+import static android.app.Activity.RESULT_OK;
+import static xyz.eventstreamer.eventstreamer.commons.Constants.REQUEST_IMAGE_CAPTURE;
 
 public class AboutEventFragment extends BaseFragment implements AboutEventContract.View {
 
@@ -192,12 +200,22 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
     @OnClick(R.id.iv_camera)
     public void onCameraClick(){
         // TODO: Open camera and get file image
-        /*User user = sharedPreferenceUtil.retrieveObject(Keys.KEY_USER, User.class);
-        Post post = new Post();
-        post.setKomentar(etComment.getText().toString());
-        post.setIdObjava(event.getIdDogodek());
-        post.setIdUporabnik(user.getIdUporabnik());
-        presenter.sendPost(post);*/
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            Log.d("Slika -> ", imageBitmap.toString());
+//            slika.setImageBitmap(imageBitmap);
+        }
     }
 
     @Override
