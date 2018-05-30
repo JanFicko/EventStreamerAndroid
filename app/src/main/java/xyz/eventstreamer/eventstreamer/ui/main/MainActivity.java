@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.LatLng;
 import xyz.eventstreamer.eventstreamer.R;
 import xyz.eventstreamer.eventstreamer.commons.Animation;
 import xyz.eventstreamer.eventstreamer.data.Injection;
+import xyz.eventstreamer.eventstreamer.model.Event;
 import xyz.eventstreamer.eventstreamer.ui.BaseActivity;
 import xyz.eventstreamer.eventstreamer.ui.aboutevent.AboutEventContract;
 import xyz.eventstreamer.eventstreamer.ui.aboutevent.AboutEventFragment;
@@ -37,9 +38,9 @@ import xyz.eventstreamer.eventstreamer.ui.register.RegisterPresenter;
 
 public class MainActivity
         extends
-            BaseActivity
+        BaseActivity
         implements
-            MainContract.View {
+        MainContract.View {
 
     private LoginFragment loginFragment;
     private RegisterFragment registerFragment;
@@ -161,17 +162,13 @@ public class MainActivity
     }
 
     @Override
-    public void openAboutEvent(@Animation.AnimationType int animationType, String eventId) {
-        if(aboutEventFragment == null){
-            aboutEventFragment = AboutEventFragment.newInstance(eventId);
-        }
-        if(aboutEventPresenter == null){
-            aboutEventPresenter = new AboutEventPresenter(
-                    aboutEventFragment,
-                    Injection.providePostRepository(getApplicationContext()),
-                    Injection.provideSchedulerProvider()
-            );
-        }
+    public void openAboutEvent(@Animation.AnimationType int animationType, Event event) {
+        aboutEventFragment = AboutEventFragment.newInstance(event);
+        aboutEventPresenter = new AboutEventPresenter(
+                aboutEventFragment,
+                Injection.providePostRepository(getApplicationContext()),
+                Injection.provideSchedulerProvider()
+        );
         moveToNextFragment(aboutEventFragment, animationType);
     }
 

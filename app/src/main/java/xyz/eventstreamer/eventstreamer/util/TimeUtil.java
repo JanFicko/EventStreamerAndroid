@@ -25,6 +25,13 @@ public class TimeUtil {
         return calculatedMillis < 86400000;
     }
 
+    public static String generateCurrentTimeFromMillis(long millis) {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millis);
+        return new SimpleDateFormat("HH:mm", Locale.getDefault())
+                .format(calendar.getTime());
+    }
+
     public static String generateBackendDateDateFromMillis(long millis) {
         final Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);

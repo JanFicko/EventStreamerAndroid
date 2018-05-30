@@ -2,18 +2,35 @@ package xyz.eventstreamer.eventstreamer.ui.findevent;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 import xyz.eventstreamer.eventstreamer.R;
+import xyz.eventstreamer.eventstreamer.commons.Animation;
 import xyz.eventstreamer.eventstreamer.model.Event;
 import xyz.eventstreamer.eventstreamer.ui.BaseFragment;
+import xyz.eventstreamer.eventstreamer.ui.dashboard.EventAdapter;
 import xyz.eventstreamer.eventstreamer.ui.main.MainActivity;
+import xyz.eventstreamer.eventstreamer.util.ToastUtil;
 
-public class FindEventFragment extends BaseFragment implements FindEventContract.View {
+public class FindEventFragment extends BaseFragment implements FindEventContract.View, EventAdapter.OnEventClickListener {
 
     private MainActivity activity;
     private FindEventContract.Presenter presenter;
+    private EventAdapter eventAdapter;
+
+    @BindView(R.id.tv_toolbar_title)
+    TextView tvToolbarTitle;
+    @BindView(R.id.et_search)
+    EditText etSearch;
+    @BindView(R.id.rv_events)
+    RecyclerView rvEvents;
 
     public static FindEventFragment newInstance() {
         Bundle args = new Bundle();
@@ -42,6 +59,12 @@ public class FindEventFragment extends BaseFragment implements FindEventContract
     public void onResume() {
         super.onResume();
         presenter.subscribe();
+
+        tvToolbarTitle.setText(R.string.find_event);
+
+        rvEvents.setLayoutManager(new LinearLayoutManager(context));
+        rvEvents.setHasFixedSize(true);
+        eventAdapter = new EventAdapter(null, this);
     }
 
     @Override
@@ -50,18 +73,35 @@ public class FindEventFragment extends BaseFragment implements FindEventContract
         presenter.unsubscribe();
     }
 
+    @OnClick(R.id.iv_back)
+    public void onBackClick(){
+        activity.openDashboard(Animation.RIGHT);
+    }
+
+    @OnClick(R.id.iv_search)
+    public void onSearchClick(){
+        if(!etSearch.getText().toString().isEmpty()){
+            presenter.findEventsByQuery(etSearch.getText().toString());
+        }
+    }
+
     @Override
     public void showEventsView(List<Event> eventList) {
-        // TODO
+        eventAdapter.updateList(eventList);
     }
 
     @Override
     public void showErrorMessage() {
-        // TODO
+        ToastUtil.toastLong(context, R.string.error_search_event_unsuccessful);
     }
 
     @Override
     public void showNoInternet() {
-        // TODO
+        ToastUtil.toastLong(context, R.string.error_no_internet);
+    }
+
+    @Override
+    public void onEventClicked(Event event) {
+        activity.openAboutEvent(Animation.LEFT, event);
     }
 }

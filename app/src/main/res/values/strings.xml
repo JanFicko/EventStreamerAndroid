@@ -21,6 +21,8 @@
     <string name="location">Lokacija</string>
     <string name="ok">OK</string>
     <string name="cancel">Prekliči</string>
+    <string name="event">Dogodek</string>
+    <string name="find_event">Poišči dogodek</string>
 
     <!-- LOGIN -->
     <string name="login_title">Prijava v aplikacijo</string>
@@ -28,7 +30,7 @@
     <string name="login_register_text">Še niste registrirani? Kliknite tukaj.</string>
 
     <!-- REGISTER -->
-    <string name="register_title">Pridružite se ekipi EvenStream</string>
+    <string name="register_title">Pridružite se ekipi EventStream</string>
     <string name="register_subtitle">Z EventStream računom imate možnost prenašanja in spremljanja dogodkov v realnem času osebam, ki nimajo možnosti spremljave avdio-video vsebin.</string>
     <string name="register_checkbox_journalist">Sem novinar</string>
 
@@ -57,10 +59,12 @@
 
     <!-- OTHERS -->
     <string name="error_no_internet">Ni internetne povezave</string>
+    <string name="error_unknown">Nepoznana napaka</string>
     <string name="error_login_unsuccessful">Prijava neuspešna</string>
     <string name="error_register_unsuccessful">Registracija neuspešna</string>
     <string name="error_add_event_unsuccessful">Dodajanje dogodka neuspešno</string>
     <string name="error_no_category_picked">Izbrana ni nobena kategorija</string>
     <string name="error_no_location_picked">Izbrana ni nobena lokacija</string>
+    <string name="error_search_event_unsuccessful">Iskanje dogodka neuspešno</string>
 
 </resources>

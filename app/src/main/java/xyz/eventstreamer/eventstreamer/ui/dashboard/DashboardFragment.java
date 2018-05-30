@@ -144,12 +144,12 @@ MarkerClickListener {
 
     @Override
     public void onEventClicked(Event event) {
-        activity.openAboutEvent(Animation.LEFT, event.getIdDogodek());
+        activity.openAboutEvent(Animation.LEFT, event);
     }
 
     @Override
     public void onMarkerClick(Event event) {
-        activity.openAboutEvent(Animation.LEFT, event.getIdDogodek());
+        activity.openAboutEvent(Animation.LEFT, event);
     }
 
     @Override
@@ -177,7 +177,7 @@ MarkerClickListener {
         presenter.getEvents();
     }
 
-    @OnClick({R.id.iv_event_list, R.id.iv_event_map, R.id.iv_event_add, R.id.iv_event_profile})
+    @OnClick({R.id.iv_event_list, R.id.iv_event_map, R.id.iv_event_add, R.id.iv_event_search, R.id.iv_event_profile})
     public void onClickTab(View view){
         switch(view.getId()) {
             case R.id.iv_event_list:
@@ -188,6 +188,9 @@ MarkerClickListener {
                 break;
             case R.id.iv_event_add:
                 activity.openAddEvent(Animation.LEFT);
+                break;
+            case R.id.iv_event_search:
+                activity.openFindEvent(Animation.LEFT);
                 break;
             case R.id.iv_event_profile:
                 if(user == null){
