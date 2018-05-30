@@ -1,5 +1,7 @@
 package xyz.eventstreamer.eventstreamer.ui.findevent;
 
+import java.net.ConnectException;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import xyz.eventstreamer.eventstreamer.data.event.EventRepository;
@@ -52,7 +54,11 @@ public class FindEventPresenter implements FindEventContract.Presenter {
                         },
                         throwable -> {
                             view.setLoadingIndicator(false);
-                            view.showErrorMessage();
+                            if(throwable instanceof ConnectException){
+                                view.showNoInternet();
+                            } else {
+                                view.showErrorMessage();
+                            }
                         });
 
         compositeDisposable.add(disposable);

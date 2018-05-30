@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -31,6 +33,8 @@ public class FindEventFragment extends BaseFragment implements FindEventContract
     EditText etSearch;
     @BindView(R.id.rv_events)
     RecyclerView rvEvents;
+    @BindView(R.id.rl_no_event)
+    RelativeLayout rlNoEvents;
 
     public static FindEventFragment newInstance() {
         Bundle args = new Bundle();
@@ -60,6 +64,9 @@ public class FindEventFragment extends BaseFragment implements FindEventContract
         super.onResume();
         presenter.subscribe();
 
+        rlNoEvents.setVisibility(View.VISIBLE);
+        rvEvents.setVisibility(View.INVISIBLE);
+
         tvToolbarTitle.setText(R.string.find_event);
 
         rvEvents.setLayoutManager(new LinearLayoutManager(context));
@@ -87,7 +94,15 @@ public class FindEventFragment extends BaseFragment implements FindEventContract
 
     @Override
     public void showEventsView(List<Event> eventList) {
-        eventAdapter.updateList(eventList);
+        if(eventList == null || eventList.size() == 0){
+            rlNoEvents.setVisibility(View.VISIBLE);
+            rvEvents.setVisibility(View.INVISIBLE);
+        } else {
+            rlNoEvents.setVisibility(View.INVISIBLE);
+            rvEvents.setVisibility(View.VISIBLE);
+
+            eventAdapter.updateList(eventList);
+        }
     }
 
     @Override

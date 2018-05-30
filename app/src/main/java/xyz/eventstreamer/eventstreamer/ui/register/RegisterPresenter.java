@@ -1,5 +1,7 @@
 package xyz.eventstreamer.eventstreamer.ui.register;
 
+import java.net.ConnectException;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import xyz.eventstreamer.eventstreamer.data.user.UserRepository;
@@ -50,7 +52,11 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                         },
                         throwable -> {
                             view.setLoadingIndicator(false);
-                            view.showErrorMessage();
+                            if(throwable instanceof ConnectException){
+                                view.showNoInternet();
+                            } else {
+                                view.showErrorMessage();
+                            }
                         });
 
         compositeDisposable.add(disposable);

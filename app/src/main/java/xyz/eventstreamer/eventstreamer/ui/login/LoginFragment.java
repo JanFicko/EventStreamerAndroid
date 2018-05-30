@@ -209,11 +209,6 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     }
 
     @Override
-    public void setLoadingIndicator(boolean active) {
-        // TODO
-    }
-
-    @Override
     public void showNoInternet() {
         ToastUtil.toastLong(context, R.string.error_no_internet);
     }

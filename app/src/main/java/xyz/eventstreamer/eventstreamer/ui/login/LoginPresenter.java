@@ -1,5 +1,7 @@
 package xyz.eventstreamer.eventstreamer.ui.login;
 
+import java.net.ConnectException;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import xyz.eventstreamer.eventstreamer.data.user.UserRepository;
@@ -58,7 +60,11 @@ public class LoginPresenter implements LoginContract.Presenter {
                         },
                         throwable -> {
                             view.setLoadingIndicator(false);
-                            view.showErrorMessage();
+                            if(throwable instanceof ConnectException){
+                                view.showNoInternet();
+                            } else {
+                                view.showErrorMessage();
+                            }
                         });
 
         compositeDisposable.add(disposable);
