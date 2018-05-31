@@ -221,11 +221,7 @@ MarkerClickListener {
     @Override
     public void setLoadingIndicator(boolean active) {
         super.setLoadingIndicator(active);
-        if(active){
-            srlEvents.setRefreshing(true);
-        } else {
-            srlEvents.setRefreshing(false);
-        }
+        srlEvents.setRefreshing(false);
     }
 
     @Override

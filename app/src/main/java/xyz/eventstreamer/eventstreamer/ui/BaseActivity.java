@@ -1,5 +1,6 @@
 package xyz.eventstreamer.eventstreamer.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.inputmethod.InputMethodManager;
 
 import xyz.eventstreamer.eventstreamer.R;
 import xyz.eventstreamer.eventstreamer.commons.Animation;
@@ -53,9 +55,19 @@ public abstract class BaseActivity extends AppCompatActivity {
             default:
                 /* No animation. */
         }
+        hideKeyboard();
+
         fragmentTransaction.replace(frameId, fragment, fragment.getClass().getSimpleName());
         fragmentTransaction.disallowAddToBackStack();
         fragmentTransaction.commit();
+    }
+
+
+    protected void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+        }
     }
 
 }

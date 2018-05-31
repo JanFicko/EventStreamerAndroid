@@ -46,8 +46,6 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-
-
     public void setLoadingIndicator(boolean active) {
         if (active) {
             if (!dfProgress.isAdded()) {

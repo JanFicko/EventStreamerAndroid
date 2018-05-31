@@ -76,13 +76,14 @@ public class FindEventFragment
         etSearch.addTextChangedListener(this);
 
         rlNoEvents.setVisibility(View.VISIBLE);
-        rvEvents.setVisibility(View.INVISIBLE);
+        rvEvents.setVisibility(View.GONE);
 
         tvToolbarTitle.setText(R.string.find_event);
 
         rvEvents.setLayoutManager(new LinearLayoutManager(context));
         rvEvents.setHasFixedSize(true);
         eventAdapter = new EventAdapter(null, this);
+        rvEvents.setAdapter(eventAdapter);
     }
 
     @Override
@@ -101,9 +102,9 @@ public class FindEventFragment
         if(eventList == null || eventList.size() == 0){
             rlNoEvents.setVisibility(View.VISIBLE);
             tvPlaceholder.setText(R.string.find_event_no_event);
-            rvEvents.setVisibility(View.INVISIBLE);
+            rvEvents.setVisibility(View.GONE);
         } else {
-            rlNoEvents.setVisibility(View.INVISIBLE);
+            rlNoEvents.setVisibility(View.GONE);
             rvEvents.setVisibility(View.VISIBLE);
 
             eventAdapter.updateList(eventList);
