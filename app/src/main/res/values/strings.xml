@@ -1,72 +1,75 @@
 <resources>
     <string name="app_name">EventStreamer</string>
 
-    <string name="name">Ime</string>
-    <string name="surname">Priimek</string>
+    <string name="name">First name</string>
+    <string name="surname">Last name</string>
     <string name="email">Email</string>
-    <string name="type">Tip</string>
-    <string name="password">Geslo</string>
-    <string name="login">Prijava</string>
-    <string name="logout">Odjava</string>
-    <string name="add_event">Dodaj dogodek</string>
-    <string name="registration">Registracija</string>
-    <string name="medium">Medij</string>
-    <string name="empty_field">To polje je prazno</string>
-    <string name="no_data">Ni podatka</string>
-    <string name="profile">Profil</string>
-    <string name="title">Naslov</string>
-    <string name="description">Opis</string>
-    <string name="date">Datum</string>
-    <string name="categories">Kategorije</string>
-    <string name="location">Lokacija</string>
+    <string name="type">Type</string>
+    <string name="password">Password</string>
+    <string name="login">Sign in</string>
+    <string name="logout">Sign out</string>
+    <string name="add_event">Add event</string>
+    <string name="registration">Registration</string>
+    <string name="medium">Media</string>
+    <string name="no_data">No data</string>
+    <string name="profile">Profile</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="date">Date</string>
+    <string name="categories">Category</string>
+    <string name="location">Location</string>
     <string name="ok">OK</string>
-    <string name="cancel">Prekliči</string>
-    <string name="event">Dogodek</string>
-    <string name="find_event">Poišči dogodek</string>
-    <string name="comment">Komentar</string>
+    <string name="cancel">Cancel</string>
+    <string name="event">Event</string>
+    <string name="find_event">Find event</string>
+    <string name="comment">Comment</string>
 
     <!-- LOGIN -->
-    <string name="login_title">Prijava v aplikacijo</string>
-    <string name="login_subtitle">Prijava v aplikacijo možna z uporabniškim imenom in geslom ali Google računom.</string>
-    <string name="login_register_text">Še niste registrirani? Kliknite tukaj.</string>
+    <string name="login_title">App login</string>
+    <string name="login_subtitle">Login using your username and password or your Google account</string>
+    <string name="login_register_text">Not registered yet? Click here.</string>
 
     <!-- REGISTER -->
-    <string name="register_title">Pridružite se ekipi EventStream</string>
-    <string name="register_subtitle">Z EventStream računom imate možnost prenašanja in spremljanja dogodkov v realnem času osebam, ki nimajo možnosti spremljave avdio-video vsebin.</string>
-    <string name="register_checkbox_journalist">Sem novinar</string>
+    <string name="register_title">Join the EventStream team</string>
+
+    <string name="register_subtitle">EventStream accounts allows those who cannot access audio-video content, to post and follow events in real time.</string>
+    <string name="register_checkbox_journalist">I am a journalist</string>
 
     <!-- DASHBOARD -->
     <string name="dashboard_event_fill_category" translatable="false">%1$s • %2$s</string>
     <string name="dashboard_event_fill" translatable="false">%1$s</string>
-    <string name="dashboard_location_persmission_title">Dovoljenje za uporabo lokacije</string>
-    <string name="dashboard_location_persmission_text">Za prikaz seznama dogodkov na zemljevidu potrebujemo vaše dovoljenje za uporabo lokacije</string>
+    <string name="dashboard_location_persmission_title">Location service permission</string>
+    <string name="dashboard_location_persmission_text">We need your permission to use location service in order to show you events on the map</string>
 
     <!-- ADD EVENT -->
-    <string name="add_event_title">Objavite nov dogodek</string>
-    <string name="add_event_subtitle">Ustvarili boste nov dogodek na katerem boste lahko v realnem času objavljali posodobitve dogajanja</string>
-    <string name="add_event_pick_categories">Izberite kategorije</string>
+    <string name="add_event_title">Add new event</string>
+    <string name="add_event_subtitle">You are about to create new event, where you can post live updates in real time</string>
+    <string name="add_event_pick_categories">Choose category</string>
     <string-array name="categories">
-        <item>Novice</item>
-        <item>Šport</item>
-        <item>Kultura</item>
-        <item>Zabava</item>
-        <item>Politika</item>
+        <item>News</item>
+        <item>Sport</item>
+        <item>Culture</item>
+        <item>Entertainment</item>
+        <item>Politics</item>
     </string-array>
 
     <!-- SEARCH -->
-    <string name="find_event_title">Iskanje po dogodkih</string>
-    <string name="find_event_search">Išči…</string>
+    <string name="find_event_title">Search the event</string>
+    <string name="find_event_search">Search…</string>
+    <string name="find_event_no_event">No events to show</string>
+    <string name="find_event_searching">Searching through events…</string>
 
 
     <!-- OTHERS -->
-    <string name="error_no_internet">Ni internetne povezave</string>
-    <string name="error_unknown">Nepoznana napaka</string>
-    <string name="error_login_unsuccessful">Prijava neuspešna</string>
-    <string name="error_register_unsuccessful">Registracija neuspešna</string>
-    <string name="error_add_event_unsuccessful">Dodajanje dogodka neuspešno</string>
-    <string name="error_no_category_picked">Izbrana ni nobena kategorija</string>
-    <string name="error_no_location_picked">Izbrana ni nobena lokacija</string>
-    <string name="error_search_event_unsuccessful">Iskanje dogodka neuspešno</string>
-    <string name="error_events_unsuccessful">Pridobivanje dogodkov neuspešno</string>
+    <string name="empty_field">This field is empty</string>
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_unknown">Unknown error</string>
+    <string name="error_login_unsuccessful">Unsuccessful login</string>
+    <string name="error_register_unsuccessful">Unsuccessful registration</string>
+    <string name="error_add_event_unsuccessful">Adding new event failed</string>
+    <string name="error_no_category_picked">You chose none of the categories</string>
+    <string name="error_no_location_picked">You did not choose any location</string>
+    <string name="error_search_event_unsuccessful">Unsuccessful event search</string>
+    <string name="error_events_unsuccessful">Events listing failed</string>
 
 </resources>

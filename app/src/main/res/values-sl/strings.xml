@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">EventStreamer</string>
+
+    <string name="name">Ime</string>
+    <string name="surname">Priimek</string>
+    <string name="email">Email</string>
+    <string name="type">Tip</string>
+    <string name="password">Geslo</string>
+    <string name="login">Prijava</string>
+    <string name="logout">Odjava</string>
+    <string name="add_event">Dodaj dogodek</string>
+    <string name="registration">Registracija</string>
+    <string name="medium">Medij</string>
+    <string name="empty_field">To polje je prazno</string>
+    <string name="no_data">Ni podatka</string>
+    <string name="profile">Profil</string>
+    <string name="title">Naslov</string>
+    <string name="description">Opis</string>
+    <string name="date">Datum</string>
+    <string name="categories">Kategorije</string>
+    <string name="location">Lokacija</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Prekliči</string>
+    <string name="event">Dogodek</string>
+    <string name="find_event">Poišči dogodek</string>
+    <string name="comment">Komentar</string>
+
+    <!-- LOGIN -->
+    <string name="login_title">Prijava v aplikacijo</string>
+    <string name="login_subtitle">Prijava v aplikacijo možna z uporabniškim imenom in geslom ali Google računom.</string>
+    <string name="login_register_text">Še niste registrirani? Kliknite tukaj.</string>
+
+    <!-- REGISTER -->
+    <string name="register_title">Pridružite se ekipi EventStream</string>
+    <string name="register_subtitle">Z EventStream računom imate možnost prenašanja in spremljanja dogodkov v realnem času osebam, ki nimajo možnosti spremljave avdio-video vsebin.</string>
+    <string name="register_checkbox_journalist">Sem novinar</string>
+
+    <!-- DASHBOARD -->
+    <string name="dashboard_event_fill_category" translatable="false">%1$s • %2$s</string>
+    <string name="dashboard_event_fill" translatable="false">%1$s</string>
+    <string name="dashboard_location_persmission_title">Dovoljenje za uporabo lokacije</string>
+    <string name="dashboard_location_persmission_text">Za prikaz seznama dogodkov na zemljevidu potrebujemo vaše dovoljenje za uporabo lokacije</string>
+
+    <!-- ADD EVENT -->
+    <string name="add_event_title">Objavite nov dogodek</string>
+    <string name="add_event_subtitle">Ustvarili boste nov dogodek na katerem boste lahko v realnem času objavljali posodobitve dogajanja</string>
+    <string name="add_event_pick_categories">Izberite kategorije</string>
+    <string-array name="categories">
+        <item>Novice</item>
+        <item>Šport</item>
+        <item>Kultura</item>
+        <item>Zabava</item>
+        <item>Politika</item>
+    </string-array>
+
+    <!-- SEARCH -->
+    <string name="find_event_title">Iskanje po dogodkih</string>
+    <string name="find_event_search">Išči…</string>
+    <string name="find_event_no_event">Ni dogodkov za prikaz</string>
+    <string name="find_event_searching">Iskanje po dogodkih…</string>
+
+    <!-- OTHERS -->
+    <string name="error_no_internet">Ni internetne povezave</string>
+    <string name="error_unknown">Nepoznana napaka</string>
+    <string name="error_login_unsuccessful">Prijava neuspešna</string>
+    <string name="error_register_unsuccessful">Registracija neuspešna</string>
+    <string name="error_add_event_unsuccessful">Dodajanje dogodka neuspešno</string>
+    <string name="error_no_category_picked">Izbrana ni nobena kategorija</string>
+    <string name="error_no_location_picked">Izbrana ni nobena lokacija</string>
+    <string name="error_search_event_unsuccessful">Iskanje dogodka neuspešno</string>
+    <string name="error_events_unsuccessful">Pridobivanje dogodkov neuspešno</string>
+
+</resources>

@@ -21,9 +21,9 @@
         android:hint="@string/find_event_search"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/iv_search"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/iv_search"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -33,13 +33,14 @@
         app:layout_constraintTop_toTopOf="@id/et_search"
         app:layout_constraintStart_toEndOf="@id/et_search"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/et_search"/>
+        app:layout_constraintBottom_toBottomOf="@id/et_search"/>-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_events"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
+        android:visibility="gone"
         android:background="@drawable/bg_gradient_underline_blue"
         app:layout_constraintTop_toBottomOf="@id/et_search"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,22 +51,23 @@
         android:id="@+id/rl_no_event"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:background="@drawable/bg_gradient_underline_blue"
         app:layout_constraintTop_toBottomOf="@id/et_search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
-        <ImageView
-            android:id="@+id/iv_no_events"
+        <TextView
+            android:id="@+id/tv_placeholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="150dp"
-            android:src="@drawable/ic_sadface"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="@string/find_event_no_event"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

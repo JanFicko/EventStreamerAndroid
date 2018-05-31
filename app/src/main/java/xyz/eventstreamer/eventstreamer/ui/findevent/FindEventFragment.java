@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -21,7 +23,12 @@ import xyz.eventstreamer.eventstreamer.ui.dashboard.EventAdapter;
 import xyz.eventstreamer.eventstreamer.ui.main.MainActivity;
 import xyz.eventstreamer.eventstreamer.util.ToastUtil;
 
-public class FindEventFragment extends BaseFragment implements FindEventContract.View, EventAdapter.OnEventClickListener {
+public class FindEventFragment
+        extends
+            BaseFragment
+        implements
+            FindEventContract.View, EventAdapter.OnEventClickListener,
+        TextWatcher {
 
     private MainActivity activity;
     private FindEventContract.Presenter presenter;
@@ -35,6 +42,8 @@ public class FindEventFragment extends BaseFragment implements FindEventContract
     RecyclerView rvEvents;
     @BindView(R.id.rl_no_event)
     RelativeLayout rlNoEvents;
+    @BindView(R.id.tv_placeholder)
+    TextView tvPlaceholder;
 
     public static FindEventFragment newInstance() {
         Bundle args = new Bundle();
@@ -64,6 +73,8 @@ public class FindEventFragment extends BaseFragment implements FindEventContract
         super.onResume();
         presenter.subscribe();
 
+        etSearch.addTextChangedListener(this);
+
         rlNoEvents.setVisibility(View.VISIBLE);
         rvEvents.setVisibility(View.INVISIBLE);
 
@@ -85,17 +96,11 @@ public class FindEventFragment extends BaseFragment implements FindEventContract
         activity.openDashboard(Animation.RIGHT);
     }
 
-    @OnClick(R.id.iv_search)
-    public void onSearchClick(){
-        if(!etSearch.getText().toString().isEmpty()){
-            presenter.findEventsByQuery(etSearch.getText().toString());
-        }
-    }
-
     @Override
     public void showEventsView(List<Event> eventList) {
         if(eventList == null || eventList.size() == 0){
             rlNoEvents.setVisibility(View.VISIBLE);
+            tvPlaceholder.setText(R.string.find_event_no_event);
             rvEvents.setVisibility(View.INVISIBLE);
         } else {
             rlNoEvents.setVisibility(View.INVISIBLE);
@@ -118,5 +123,30 @@ public class FindEventFragment extends BaseFragment implements FindEventContract
     @Override
     public void onEventClicked(Event event) {
         activity.openAboutEvent(Animation.LEFT, event);
+    }
+
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+        if(active){
+            tvPlaceholder.setText(R.string.find_event_searching);
+        }
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        /* UNUSED */
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        if(!editable.toString().isEmpty()){
+            presenter.findEventsByQuery(etSearch.getText().toString());
+        }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        /* UNUSED */
     }
 }

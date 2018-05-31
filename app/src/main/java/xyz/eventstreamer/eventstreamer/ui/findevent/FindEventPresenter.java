@@ -57,6 +57,7 @@ public class FindEventPresenter implements FindEventContract.Presenter {
                             if(throwable instanceof ConnectException){
                                 view.showNoInternet();
                             } else {
+                                view.showEventsView(null);
                                 view.showErrorMessage();
                             }
                         });
