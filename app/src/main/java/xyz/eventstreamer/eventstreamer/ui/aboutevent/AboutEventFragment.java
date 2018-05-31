@@ -173,7 +173,8 @@ public class AboutEventFragment extends BaseFragment implements AboutEventContra
             if(event != null){
                 user = sharedPreferenceUtil.retrieveObject(Keys.KEY_USER, User.class);
 
-                if(user == null || user.getTip().equalsIgnoreCase("Uporabnik")){
+                if((user == null || user.getTip().equalsIgnoreCase("Uporabnik"))
+                        && !event.getIdUporabnik().equalsIgnoreCase(user.getIdUporabnik())){
                     vDividerComment.setVisibility(View.GONE);
                     ivCamera.setVisibility(View.GONE);
                     etComment.setVisibility(View.GONE);
